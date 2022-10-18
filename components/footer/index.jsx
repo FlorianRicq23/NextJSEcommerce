@@ -34,7 +34,7 @@ function Footer() {
               <TbCornerUpLeftDouble />
             </Box>
             <strong>30 jours</strong>
-            <span>pour changer d'avis*</span>
+            <span>pour changer d avis*</span>
           </Flex>
 
           <Flex flexDirection={'column'} alignItems='center'>

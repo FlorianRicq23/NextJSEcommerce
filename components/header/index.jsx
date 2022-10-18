@@ -97,7 +97,7 @@ function Header() {
           <Box pb={4} display={{ md: 'none' }}>
             <Stack as={'nav'} spacing={4}>
               {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
+                <NavLinkComponent key={link}>{link}</NavLinkComponent>
               ))}
             </Stack>
           </Box>
