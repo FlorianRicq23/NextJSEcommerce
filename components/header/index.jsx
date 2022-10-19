@@ -31,7 +31,7 @@ function Header() {
   return (
     <>
       <Box bg={'gray.100'} px={4}>
-        <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
+        <Flex h={16} alignItems={'center'} justifyContent={'space-between'} p='0 8%'>
           <IconButton
             size={'md'}
             icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
@@ -40,7 +40,7 @@ function Header() {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={'center'}>
-            <Box>Logo</Box>
+            <Box fontWeight={'bold'} fontSize={26}>NextJS E-Shop</Box>
             <HStack
               as={'nav'}
               spacing={4}
@@ -52,8 +52,8 @@ function Header() {
                 current={currentRoute}
               />
               <NavLinkComponent
-                title={'Shop'}
-                link={'/shop'}
+                title={'Products'}
+                link={'/products'}
                 current={currentRoute}
               />
             </HStack>
@@ -97,7 +97,7 @@ function Header() {
           <Box pb={4} display={{ md: 'none' }}>
             <Stack as={'nav'} spacing={4}>
               {Links.map((link) => (
-                <NavLinkComponent key={link}>{link}</NavLinkComponent>
+                <NavLinkComponent  key={link}>{link}</NavLinkComponent>
               ))}
             </Stack>
           </Box>
