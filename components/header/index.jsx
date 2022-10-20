@@ -17,6 +17,7 @@ import {
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons'
 import { useRouter } from 'next/router'
+import SearchBar from '../searchBar'
 
 const NavLinkComponent = ({ title, link, current }) => (
   <Link href={link}>
@@ -58,6 +59,7 @@ function Header() {
               />
             </HStack>
           </HStack>
+          <SearchBar />
           <Flex alignItems={'center'}>
             <Button
               variant={'solid'}

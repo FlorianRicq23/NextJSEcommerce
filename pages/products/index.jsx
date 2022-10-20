@@ -1,9 +1,63 @@
-import { Box, Flex, Grid, Heading, Image, Text } from '@chakra-ui/react'
+import { Box, Flex, Grid, Heading, 
+  RangeSlider,
+  RangeSliderTrack,
+  RangeSliderFilledTrack,
+  RangeSliderThumb,
+  CheckboxGroup,
+  Stack,
+  Checkbox, } from '@chakra-ui/react'
 import Head from 'next/head'
 import Link from 'next/link'
 import Product from '../../components/product'
+import { useState } from 'react'
 
 export default function Products({ products }) {
+  const [checkedCategories, setCheckedCategories] = useState([])
+  const allPrice = products.products.map((d) => {
+    return d.price
+  })
+  const valMin = Math.min(...allPrice)
+  const valMax = Math.max(...allPrice)
+  const [valMinSlide, setValMinSlide] = useState(valMin)
+  const [valMaxSlide, setValMaxSlide] = useState(valMax)
+
+  const handleCheck = (event) => {
+    var updatedList = [...checkedCategories]
+    if (event.target.checked) {
+      updatedList = [...checkedCategories, event.target.value]
+    } else {
+      updatedList.splice(checkedCategories.indexOf(event.target.value), 1)
+    }
+    setCheckedCategories(updatedList)
+  }
+
+  const filterPosts = (data, categories, minPrice, maxPrice) => {
+    if (
+      !categories.length &&
+      minPrice === valMin &&
+      maxPrice === valMax
+    ) {
+      return data
+    }
+
+    return data
+      .filter((product) => {
+        return product.price >= minPrice && product.price <= maxPrice
+      })
+      .filter((product) => {
+        if (categories.length) {
+          if (categories.includes(product.category)) return product
+        } else return product
+      })
+  }
+  const filteredPosts = filterPosts(
+    products.products,
+    checkedCategories,
+    valMinSlide,
+    valMaxSlide
+  )
+
+
   return (
     <div>
       <Head>
@@ -12,6 +66,39 @@ export default function Products({ products }) {
       </Head>
       <Box p="0 8%" mt={15} mb={15}>
         <Heading>All my products</Heading>
+        <RangeSlider
+        min={valMin}
+        max={valMax}
+        aria-label={['min', 'max']}
+        defaultValue={[valMin, valMax]}
+        onChangeEnd={(val) => {
+          setValMinSlide(val[0])
+          setValMaxSlide(val[1])
+        }}
+      >
+        <RangeSliderTrack bg="red.100">
+          <RangeSliderFilledTrack bg="tomato" />
+        </RangeSliderTrack>
+        <RangeSliderThumb boxSize={10} index={0}>
+          <Box color="tomato">{valMinSlide}</Box>
+        </RangeSliderThumb>
+        <RangeSliderThumb boxSize={10} index={1}>
+          <Box color="tomato">{valMaxSlide}</Box>
+        </RangeSliderThumb>
+      </RangeSlider>
+      <CheckboxGroup>
+        <Stack spacing={[1, 5]} direction={['column', 'row']}>
+              <Checkbox value={'homme'} onChange={handleCheck}>
+                Homme
+              </Checkbox>
+              <Checkbox value={'femme'} onChange={handleCheck}>
+                Femme
+              </Checkbox>
+              <Checkbox value={'enfant'} onChange={handleCheck}>
+                Enfant
+              </Checkbox>
+        </Stack>
+      </CheckboxGroup>
         <Flex
           direction="column"
           justifyContent="center"
@@ -24,7 +111,7 @@ export default function Products({ products }) {
             gridGap="5"
             gridTemplateColumns="repeat( auto-fit, minmax(300px, 1fr) )"
           >
-            {products.products.map((product) => (
+            {filteredPosts.map((product) => (
               <Box key={product.id}>
                 <Link href={`/products/${product.id}`}>
                   <a>
@@ -46,7 +133,7 @@ export default function Products({ products }) {
   )
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const products = await fetch('https://kds-js.github.io/shop.json').then((r) =>
     r.json()
   )

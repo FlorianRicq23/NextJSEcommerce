@@ -145,7 +145,7 @@ function ProductDetailPage({ products, id }) {
   )
 }
 
-export async function getServerSideProps({ params }) {
+export async function getStaticProps({ params }) {
   const products = await fetch(`https://kds-js.github.io/shop.json`).then((r) =>
     r.json()
   )
@@ -155,6 +155,15 @@ export async function getServerSideProps({ params }) {
       products,
       id,
     },
+  }
+}
+export async function getStaticPaths() {
+  const products = await fetch('https://kds-js.github.io/shop.json').then(
+    (r) => r.json()
+  )
+  return {
+    paths: products.products.map(product => ({params: {id:product.id.toString()}})),
+    fallback: false,
   }
 }
 
