@@ -5,10 +5,12 @@ import { useRouter } from 'next/router'
 export default function SearchBar() {
   const [searchQuery, setSearchQuery] = useState('')
   const router = useRouter()
-  const [route, setRoute] = useState()
   const handleSubmit = (e) => {
     e.preventDefault()
-    router.push('/products')
+    router.push({
+      pathname: '/products',
+      query: { searchQuery }
+   })
   }
 
   return (

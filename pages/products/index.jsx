@@ -10,8 +10,14 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Product from '../../components/product'
 import { useState } from 'react'
+import { useRouter } from 'next/router'
+
 
 export default function Products({ products }) {
+  const router = useRouter()  
+  const query = router.query.searchQuery
+
+  const [searchQuery, setSearchQuery] = useState(query)
   const [checkedCategories, setCheckedCategories] = useState([])
   const allPrice = products.products.map((d) => {
     return d.price
@@ -32,7 +38,7 @@ export default function Products({ products }) {
   }
 
   const filterPosts = (data, categories, minPrice, maxPrice) => {
-    if (
+    if (!query &&
       !categories.length &&
       minPrice === valMin &&
       maxPrice === valMax
@@ -48,6 +54,10 @@ export default function Products({ products }) {
         if (categories.length) {
           if (categories.includes(product.category)) return product
         } else return product
+      })
+      .filter((product) => {
+        const postName = product.name.toLowerCase()
+        return postName.includes(query)
       })
   }
   const filteredPosts = filterPosts(
@@ -139,7 +149,7 @@ export async function getStaticProps() {
   )
   return {
     props: {
-      products,
+      products
     },
   }
 }
