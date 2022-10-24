@@ -15,7 +15,7 @@ import { useRouter } from 'next/router'
 
 export default function Products({ products }) {
   const router = useRouter()  
-  const query = router.query.searchQuery
+  const query = router.query.search
 
   const [searchQuery, setSearchQuery] = useState(query)
   const [checkedCategories, setCheckedCategories] = useState([])
