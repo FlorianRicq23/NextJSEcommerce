@@ -81,7 +81,7 @@ export default function Products({ products }) {
         max={valMax}
         aria-label={['min', 'max']}
         defaultValue={[valMin, valMax]}
-        onChangeEnd={(val) => {
+        onChange={(val) => {
           setValMinSlide(val[0])
           setValMaxSlide(val[1])
         }}
