@@ -29,3 +29,25 @@ h3,
 h4 {
     font-family: 'Yantramanav', sans-serif;
 }
+
+.icon {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    font-size: 25px;
+    font-weight: blod;
+    position: relative;
+    cursor: pointer;
+}
+
+.cart {
+    position: absolute;
+    top: -6px;
+    right: -5px;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: red;
+    font-size: 15px;
+    font-weight: bold;
+}

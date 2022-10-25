@@ -23,9 +23,27 @@ import {
 } from '@chakra-ui/react'
 import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa'
 import { MdLocalShipping } from 'react-icons/md'
+import { useMyShoppingCart } from '../../utils/hooks'
 
 function ProductDetailPage({ products, id }) {
+  const { myShoppingCart, setMyShoppingCart } = useMyShoppingCart()
+
   let product = products.products[id]
+
+  const addToCart = () => {
+    setMyShoppingCart((myShoppingCart) => {
+      let isAlreadyInCart = false
+      for (let i = 0; i < myShoppingCart.length; i++) {
+        if (myShoppingCart[i].id == product.id) {
+          isAlreadyInCart = true
+        }
+      }
+
+      if (isAlreadyInCart) return myShoppingCart
+      else return [product, ...myShoppingCart]
+    })
+  }
+
   return (
     <>
       <Head>
@@ -104,7 +122,7 @@ function ProductDetailPage({ products, id }) {
                   <List spacing={2}>
                     <ListItem>
                       <Text as={'span'} fontWeight={'bold'}>
-                        Category: 
+                        Category:
                       </Text>{' '}
                       {product.category}
                     </ListItem>
@@ -125,6 +143,7 @@ function ProductDetailPage({ products, id }) {
                   transform: 'translateY(2px)',
                   boxShadow: 'lg',
                 }}
+                onClick={addToCart}
               >
                 Add to cart
               </Button>
@@ -158,11 +177,13 @@ export async function getStaticProps({ params }) {
   }
 }
 export async function getStaticPaths() {
-  const products = await fetch('https://kds-js.github.io/shop.json').then(
-    (r) => r.json()
+  const products = await fetch('https://kds-js.github.io/shop.json').then((r) =>
+    r.json()
   )
   return {
-    paths: products.products.map(product => ({params: {id:product.id.toString()}})),
+    paths: products.products.map((product) => ({
+      params: { id: product.id.toString() },
+    })),
     fallback: false,
   }
 }

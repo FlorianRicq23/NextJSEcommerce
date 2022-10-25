@@ -1,7 +1,5 @@
 import { Box } from '@chakra-ui/react'
 import Head from 'next/head'
-import Footer from '../components/footer'
-import Header from '../components/header'
 
 export default function Home() {
   return (
