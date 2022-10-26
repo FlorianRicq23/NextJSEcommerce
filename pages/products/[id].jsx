@@ -51,11 +51,12 @@ function ProductDetailPage({ products, id }) {
         <meta name="description" content="test content" />
       </Head>
       <Box>
-        <Link href={'/products'}>
-          <a>Retour</a>
-        </Link>
-
         <Container maxW={'7xl'}>
+          <Link href={'/products'}>
+            <a>
+              <Button>Back</Button>
+            </a>
+          </Link>
           <SimpleGrid
             columns={{ base: 1, lg: 2 }}
             spacing={{ base: 8, md: 10 }}
