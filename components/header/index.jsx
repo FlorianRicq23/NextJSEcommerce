@@ -7,6 +7,7 @@ import {
   useDisclosure,
   Stack,
   Icon,
+  Image,
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import { useRouter } from 'next/router'
@@ -41,7 +42,7 @@ function Header() {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={'center'}>
-            <Box>Logo</Box>
+            <Image src='../../../Images/logo-header.png' alt='logo header' maxW={150} />
             <HStack
               as={'nav'}
               spacing={4}

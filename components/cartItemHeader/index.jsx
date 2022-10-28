@@ -19,7 +19,7 @@ export default function CartItemHeader() {
             />
             {
               myShoppingCart !=0 && 
-              <Flex position={'absolute'} color='white' fontWeight={'bold'} right={'-5px'} top={'-6px'} alignItems={'center'} justifyContent={'center'} bg='red' borderRadius={'50%'} h={19} w={19}>
+              <Flex position={'absolute'} color='white' fontWeight={'bold'} right={'-5px'} top={'-6px'} alignItems={'center'} justifyContent={'center'} bg='teal.300' borderRadius={'50%'} h={19} w={19}>
                 {myShoppingCart.length}
               </Flex>
             }</Flex>
