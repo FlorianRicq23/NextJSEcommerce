@@ -14,6 +14,7 @@ import { useRouter } from 'next/router'
 import SearchBar from '../searchBar'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import CartItemHeader from '../cartItemHeader'
+import {  } from '../../utils/hooks'
 
 const NavLinkComponent = ({ title, link, current }) => (
   <Link href={link}>
@@ -32,7 +33,7 @@ function Header() {
           h={16}
           alignItems={'center'}
           justifyContent={'space-between'}
-          p="0 8%"
+          px={4}
         >
           <IconButton
             size={'md'}
@@ -42,7 +43,11 @@ function Header() {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={'center'}>
-            <Image src='../../../Images/logo-header.png' alt='logo header' maxW={150} />
+            <Image
+              src="../../../Images/logo-header.png"
+              alt="logo header"
+              maxW={150}
+            />
             <HStack
               as={'nav'}
               spacing={4}
@@ -58,11 +63,13 @@ function Header() {
                 link={'/products'}
                 current={currentRoute}
               />
-              <SearchBar />
             </HStack>
           </HStack>
           <CartItemHeader />
         </Flex>
+        <Box p={4}>
+          <SearchBar />
+        </Box>
 
         {isOpen ? (
           <Box pb={4} display={{ md: 'none' }}>
@@ -84,5 +91,6 @@ function Header() {
     </>
   )
 }
+
 
 export default Header

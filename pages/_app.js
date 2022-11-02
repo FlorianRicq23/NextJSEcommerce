@@ -8,9 +8,9 @@ function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider>
       <MyShoppingCartProvider>
-        <Header />
-        <Component {...pageProps} />
-        <Footer />
+          <Header />
+          <Component {...pageProps} />
+          <Footer />
       </MyShoppingCartProvider>
     </ChakraProvider>
   )

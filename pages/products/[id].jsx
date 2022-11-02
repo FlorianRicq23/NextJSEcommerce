@@ -29,6 +29,7 @@ function ProductDetailPage({ products, id }) {
   const { myShoppingCart, setMyShoppingCart } = useMyShoppingCart()
 
   let product = products.products[id]
+  let title = `NextJS E-Shop -  ${product.name}`
 
   const addToCart = () => {
     setMyShoppingCart((myShoppingCart) => {
@@ -47,7 +48,7 @@ function ProductDetailPage({ products, id }) {
   return (
     <>
       <Head>
-        <title>NextJS E-Shop - {product.name}</title>
+        <title>{title}</title>
         <meta name="description" content="test content" />
       </Head>
       <Box>
