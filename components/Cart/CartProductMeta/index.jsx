@@ -28,9 +28,6 @@ import {
         <Box pt="4">
           <Stack spacing="0.5">
             <Text fontWeight="medium">{name}</Text>
-            <Text color={mode('gray.600', 'gray.400')} fontSize="sm">
-              {description}
-            </Text>
           </Stack>
           {isGiftWrapping && (
             <HStack spacing="1" mt="3" color={mode('gray.600', 'gray.400')}>
@@ -44,4 +41,3 @@ import {
       </Stack>
     )
   }
-  

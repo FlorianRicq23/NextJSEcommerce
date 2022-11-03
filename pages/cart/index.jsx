@@ -1,55 +1,57 @@
 import { AddIcon, MinusIcon } from '@chakra-ui/icons'
-import { Box, Flex, Heading, HStack, Link, Stack, Text } from '@chakra-ui/react'
+import {
+  Box,
+  Flex,
+  Heading,
+  HStack,
+  Link,
+  Stack,
+  Text,
+  useColorModeValue as mode,
+} from '@chakra-ui/react'
 import Head from 'next/head'
-import { FaLess } from 'react-icons/fa'
-import { MdMore } from 'react-icons/md'
-import { useMyShoppingCart } from '../../utils/hooks'
-import CartOrderSummary from '../../components/cartOrderSummary'
-import CartItem from '../../components/cartItem'
 import { useState, useEffect } from 'react'
+import { useMyShoppingCart } from '../../utils/hooks'
+import * as React from 'react'
+import { CartItem } from '../../components/Cart/CartItem'
+import { CartOrderSummary } from '../../components/Cart/CartOrderSummary'
 
 export default function Cart() {
-  const { myShoppingCart, setMyShoppingCart } = useState([])
-  
-  useEffect(() => {
-    if(localStorage.getItem('cart')) {
-      setMyShoppingCart(JSON.parse(localStorage.getItem('cart')))
-  } else {
-      setMyShoppingCart([])
-  }
-    localStorage.setItem('cart', JSON.stringify(myShoppingCart))
-  }, [myShoppingCart, setMyShoppingCart])
+  const { myShoppingCart, setMyShoppingCart } = useMyShoppingCart()
 
-  console.log(myShoppingCart)
-
-  const deleteItem = (item) => {
+  const deleteItem = (idP) => {
     setMyShoppingCart((myShoppingCart) => {
       let newList = myShoppingCart.filter(
-        (shoppingItem) => shoppingItem.id !== item
+        (shoppingItem) => shoppingItem.id !== idP
       )
       return newList
     })
   }
 
-  const addQuantity = (product) => {
+  const addQuantity = (idP) => {
     setMyShoppingCart((myShoppingCart) => {
       return myShoppingCart.map((item) => {
-        if (item.id == product.id) {
+        if (item.id == idP) {
           return { ...item, quantity: item.quantity + 1 }
         } else return item
       })
     })
   }
 
-  const reduceQuantity = (product) => {
+  const reduceQuantity = (idP) => {
     setMyShoppingCart((myShoppingCart) => {
       return myShoppingCart.map((item) => {
-        if (item.id == product.id && product.quantity > 0) {
+        if (item.id == idP && item.quantity > 1) {
           return { ...item, quantity: item.quantity - 1 }
         } else return item
       })
     })
   }
+
+  useEffect(() => {
+    const items = JSON.parse(localStorage.getItem('cart'))
+    setMyShoppingCart(items)
+  }, [])
 
   return (
     <div>
@@ -58,31 +60,7 @@ export default function Cart() {
         <meta name="description" content="My NextJS E-Shop" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Box p="0 8%">
-        My cart page
-        <Heading> My cart page</Heading>
-        <Box>
-          {myShoppingCart ? 
-          <>
-          {myShoppingCart.map((item, index) => (
-            <Box key={index}>
-              <Text onClick={() => deleteItem(item.id)}>Supprimer</Text>
-              <Text>{item.name}</Text>
-              <Flex gap={5}>
-                <MinusIcon onClick={() => reduceQuantity(item)} />
-                <Text>{item.quantity}</Text>
-                <AddIcon onClick={() => addQuantity(item)} />
-              </Flex>
-            </Box>
-          ))}
-          </>
-          : 
-          <Box>Le panier est vide</Box>
-          }
-          
-        </Box>
-      </Box>
-      {/* <Box
+      <Box
         maxW={{
           base: '3xl',
           lg: '7xl',
@@ -120,12 +98,16 @@ export default function Cart() {
             flex="2"
           >
             <Heading fontSize="2xl" fontWeight="extrabold">
-              Shopping Cart (3 items)
+              Shopping Cart ({myShoppingCart.length} items)
             </Heading>
 
             <Stack spacing="6">
               {myShoppingCart.map((item) => (
-                <CartItem key={item.id} {...item} />
+                <CartItem key={item.id} 
+                addQuantity={addQuantity}
+                reduceQuantity={reduceQuantity}
+                deleteItem={deleteItem} 
+                {...item} />
               ))}
             </Stack>
           </Stack>
@@ -134,13 +116,13 @@ export default function Cart() {
             <CartOrderSummary />
             <HStack mt="6" fontWeight="semibold">
               <p>or</p>
-              <Link color='teal.300'>
-                Continue shopping
+              <Link href='/products' color={mode('blue.500', 'blue.200')}><a>
+                Continue shopping</a>
               </Link>
             </HStack>
           </Flex>
         </Stack>
-      </Box> */}
+      </Box>
     </div>
   )
 }

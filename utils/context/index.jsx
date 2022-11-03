@@ -14,10 +14,32 @@ export function useMyShoppingCartContext() {
 }
 
 export function MyShoppingCartProvider({ children }) {
-  const [myShoppingCart, setMyShoppingCart] = useState([])
+  const initialState = [];
+  let [myShoppingCart, setMyShoppingCart] = useState(initialState);
+  let [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    const cartData = JSON.parse(localStorage.getItem("cart"));
+    if (cartData) {
+      setMyShoppingCart(cartData);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (myShoppingCart !== initialState) {
+      localStorage.setItem("cart", JSON.stringify(myShoppingCart));
+    }
+    let price = 0;
+    myShoppingCart.map((product) => {
+      price += (product.quantity*product.price)
+    })
+    setTotalPrice(price)
+  }, [myShoppingCart]);
+
   const contextValue = {
     myShoppingCart,
     setMyShoppingCart,
+    totalPrice
   }
 
   return (

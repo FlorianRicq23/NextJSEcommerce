@@ -24,14 +24,29 @@ import {
 import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa'
 import { MdLocalShipping } from 'react-icons/md'
 import { useMyShoppingCart } from '../../utils/hooks'
+import { useState, useEffect } from 'react'
 
 function ProductDetailPage({ products, id }) {
   const { myShoppingCart, setMyShoppingCart } = useMyShoppingCart()
 
   let product = products.products[id]
   let title = `NextJS E-Shop -  ${product.name}`
+  
 
   const addToCart = () => {
+    setMyShoppingCart((myShoppingCart) => {
+      let isAlreadyInCart = false
+      for (let i = 0; i < myShoppingCart.length; i++) {
+        if (myShoppingCart[i].id == product.id) {
+          isAlreadyInCart = true
+        }
+      }
+      if (isAlreadyInCart) return myShoppingCart
+      else return [product, ...myShoppingCart]
+    })
+  }
+
+/*   const addToCart2 = () => {
     setMyShoppingCart((myShoppingCart) => {
       let isAlreadyInCart = false
       for (let i = 0; i < myShoppingCart.length; i++) {
@@ -44,6 +59,19 @@ function ProductDetailPage({ products, id }) {
       else return [product, ...myShoppingCart]
     })
   }
+  
+  const addToCart3 = () => {
+    let isAlreadyInCart = false
+    //const items = JSON.parse(localStorage.getItem('cart'))
+    for (let i = 0; i < myShoppingCart.length; i++) {
+      if (items[i].id == product.id) {
+        isAlreadyInCart = true
+        items[i].quantity+=1
+      }
+    }
+    if (isAlreadyInCart) localStorage.setItem( 'cart',JSON.stringify([...items]))
+    else localStorage.setItem( 'cart',JSON.stringify([...items, product])) 
+  } */
 
   return (
     <>

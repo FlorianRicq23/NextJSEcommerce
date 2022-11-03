@@ -1,5 +1,6 @@
 import { Box, Flex, Icon } from '@chakra-ui/react'
 import Link from 'next/link'
+import { useState, useEffect } from 'react'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { useMyShoppingCart } from '../../utils/hooks'
 

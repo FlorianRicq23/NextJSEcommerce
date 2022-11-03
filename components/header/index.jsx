@@ -14,7 +14,6 @@ import { useRouter } from 'next/router'
 import SearchBar from '../searchBar'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import CartItemHeader from '../cartItemHeader'
-import {  } from '../../utils/hooks'
 
 const NavLinkComponent = ({ title, link, current }) => (
   <Link href={link}>
