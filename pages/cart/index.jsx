@@ -4,7 +4,6 @@ import {
   Flex,
   Heading,
   HStack,
-  Link,
   Stack,
   Text,
   useColorModeValue as mode,
@@ -15,6 +14,7 @@ import { useMyShoppingCart } from '../../utils/hooks'
 import * as React from 'react'
 import { CartItem } from '../../components/Cart/CartItem'
 import { CartOrderSummary } from '../../components/Cart/CartOrderSummary'
+import Link from 'next/link'
 
 export default function Cart() {
   const { myShoppingCart, setMyShoppingCart } = useMyShoppingCart()
@@ -98,16 +98,18 @@ export default function Cart() {
             flex="2"
           >
             <Heading fontSize="2xl" fontWeight="extrabold">
-              Shopping Cart ({myShoppingCart.length} items)
+              Panier ({myShoppingCart.length} produits)
             </Heading>
 
             <Stack spacing="6">
               {myShoppingCart.map((item) => (
-                <CartItem key={item.id} 
-                addQuantity={addQuantity}
-                reduceQuantity={reduceQuantity}
-                deleteItem={deleteItem} 
-                {...item} />
+                <CartItem
+                  key={item.id}
+                  addQuantity={addQuantity}
+                  reduceQuantity={reduceQuantity}
+                  deleteItem={deleteItem}
+                  {...item}
+                />
               ))}
             </Stack>
           </Stack>
@@ -115,9 +117,9 @@ export default function Cart() {
           <Flex direction="column" align="center" flex="1">
             <CartOrderSummary />
             <HStack mt="6" fontWeight="semibold">
-              <p>or</p>
-              <Link href='/products' color={mode('blue.500', 'blue.200')}><a>
-                Continue shopping</a>
+              <p>ou</p>
+              <Link href="/products" color={mode('blue.500', 'blue.200')}>
+                <a>Continuer le shopping</a>
               </Link>
             </HStack>
           </Flex>

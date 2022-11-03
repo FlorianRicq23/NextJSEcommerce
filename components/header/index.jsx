@@ -15,10 +15,11 @@ import SearchBar from '../searchBar'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import CartItemHeader from '../cartItemHeader'
 
-const NavLinkComponent = ({ title, link, current }) => (
-  <Link href={link}>
+const NavLinkComponent = ({ title, link, current, isOpen, onClose, onOpen }) => (
+  <Box onClick={isOpen ? onClose : onOpen}><Link href={link}>
     <a style={current === link ? { fontWeight: 'bold' } : null}>{title}</a>
-  </Link>
+  </Link></Box>
+  
 )
 
 function Header() {
@@ -53,12 +54,12 @@ function Header() {
               display={{ base: 'none', md: 'flex' }}
             >
               <NavLinkComponent
-                title={'Home'}
+                title={'Accueil'}
                 link={'/'}
                 current={currentRoute}
               />
               <NavLinkComponent
-                title={'Products'}
+                title={'Produits'}
                 link={'/products'}
                 current={currentRoute}
               />
@@ -74,12 +75,15 @@ function Header() {
           <Box pb={4} display={{ md: 'none' }}>
             <Stack as={'nav'} spacing={4}>
               <NavLinkComponent
-                title={'Home'}
+                title={'Accueil'}
                 link={'/'}
                 current={currentRoute}
+                isOpen={isOpen}
+                onClose={onClose}
+                onOpen={onOpen}
               />
               <NavLinkComponent
-                title={'Products'}
+                title={'Produits'}
                 link={'/products'}
                 current={currentRoute}
               />

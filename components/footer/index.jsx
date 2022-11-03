@@ -13,8 +13,9 @@ import {
   VisuallyHidden,
 } from '@chakra-ui/react'
 import Link from 'next/link'
-import { FaGithub, FaLinkedinIn, FaUser } from 'react-icons/fa'
-import { FcAssistant, FcDonate, FcInTransit } from 'react-icons/fc'
+import { BsCreditCard } from 'react-icons/bs'
+import { FaCreditCard, FaGithub, FaLinkedinIn, FaUser } from 'react-icons/fa'
+import { FcAbout, FcAdvertising, FcAssistant, FcBusinessContact, FcDonate, FcInTransit } from 'react-icons/fc'
 
 function Footer() {
   return (
@@ -29,28 +30,27 @@ function Footer() {
           <SimpleGrid columns={{ base: 1, md: 3 }} spacing={10}>
             <Feature
               icon={<Icon as={FcAssistant} w={10} h={10} />}
-              title={'Lifetime Support'}
+              title={'Satisfait'}
               text={
-                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore...'
+                'ou remboursé*'
               }
             />
             <Feature
-              icon={<Icon as={FcDonate} w={10} h={10} />}
-              title={'Unlimited Donations'}
+              icon={<Icon as={BsCreditCard} color='black' w={10} h={10} />}
+              title={'Paiement sécurisé'}
               text={
-                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore...'
+                '100% tranquilité*'
               }
             />
             <Feature
               icon={<Icon as={FcInTransit} w={10} h={10} />}
-              title={'Instant Delivery'}
+              title={'Livraison gratuite'}
               text={
-                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore...'
+                'Voir conditions*'
               }
             />
           </SimpleGrid>
         </Box>
-
 
         <Box bg="teal.600" color="white">
           <Container
@@ -97,19 +97,19 @@ const Feature = (FeatureProps) => {
   return (
     <Stack>
       <Flex
-        w={16}
         h={16}
         align={'center'}
         justify={'center'}
-        color={'white'}
-        rounded={'full'}
-        bg={'gray.100'}
         mb={1}
       >
         {FeatureProps.icon}
       </Flex>
-      <Text fontWeight={600}>{FeatureProps.title}</Text>
-      <Text color={'gray.600'}>{FeatureProps.text}</Text>
+      <Text fontWeight={600} textAlign="center">
+        {FeatureProps.title}
+      </Text>
+      <Text color={'gray.600'} textAlign="center">
+        {FeatureProps.text}
+      </Text>
     </Stack>
   )
 }

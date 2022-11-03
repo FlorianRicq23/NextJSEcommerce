@@ -29,18 +29,18 @@ import {
     const { totalPrice } = useMyShoppingCart()
     return (
       <Stack spacing="8" borderWidth="1px" rounded="lg" padding="8" width="full">
-        <Heading size="md">Order Summary</Heading>
+        <Heading size="md">Resumé de la commande</Heading>
   
         <Stack spacing="6">
-          <OrderSummaryItem label="Subtotal" value={formatPrice(totalPrice)} />
-          <OrderSummaryItem label="Shipping + Tax">
+          <OrderSummaryItem label="Sous-total" value={`${totalPrice} €`} />
+          <OrderSummaryItem label="Livraison + Taxe">
             <Link href="#" textDecor="underline">
-              Calculate shipping
+              Calculer les frais de livraisons
             </Link>
           </OrderSummaryItem>
-          <OrderSummaryItem label="Coupon Code">
+          <OrderSummaryItem label="Code promo">
             <Link href="#" textDecor="underline">
-              Add coupon code
+              Ajouter un code promo
             </Link>
           </OrderSummaryItem>
           <Flex justify="space-between">
@@ -48,12 +48,12 @@ import {
               Total
             </Text>
             <Text fontSize="xl" fontWeight="extrabold">
-              {formatPrice(totalPrice)}
+              {totalPrice} €
             </Text>
           </Flex>
         </Stack>
         <Button colorScheme="blue" size="lg" fontSize="md" rightIcon={<FaArrowRight />}>
-          Checkout
+          Valider
         </Button>
       </Stack>
     )

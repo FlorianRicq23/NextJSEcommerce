@@ -81,11 +81,7 @@ function ProductDetailPage({ products, id }) {
       </Head>
       <Box>
         <Container maxW={'7xl'}>
-          <Link href={'/products'}>
-            <a>
-              <Button>Back</Button>
-            </a>
-          </Link>
+          
           <SimpleGrid
             columns={{ base: 1, lg: 2 }}
             spacing={{ base: 8, md: 10 }}
@@ -141,12 +137,12 @@ function ProductDetailPage({ products, id }) {
                 <Box>
                   <Text
                     fontSize={{ base: '16px', lg: '18px' }}
-                    color={useColorModeValue('yellow.500', 'yellow.300')}
+                    color={useColorModeValue('teal.500', 'teal.300')}
                     fontWeight={'500'}
                     textTransform={'uppercase'}
                     mb={'4'}
                   >
-                    Product Details
+                    Details du produit
                   </Text>
 
                   <List spacing={2}>
@@ -175,7 +171,7 @@ function ProductDetailPage({ products, id }) {
                 }}
                 onClick={addToCart}
               >
-                Add to cart
+                Ajouter au panier
               </Button>
 
               <Stack
@@ -184,7 +180,7 @@ function ProductDetailPage({ products, id }) {
                 justifyContent={'center'}
               >
                 <MdLocalShipping />
-                <Text>2-3 business days delivery</Text>
+                <Text>2-3 jours de livraison</Text>
               </Stack>
             </Stack>
           </SimpleGrid>

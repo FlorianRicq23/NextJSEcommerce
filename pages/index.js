@@ -25,8 +25,9 @@ import { BsPerson } from 'react-icons/bs'
 import { FiServer } from 'react-icons/fi'
 import { GoLocation } from 'react-icons/go'
 import Link from 'next/link'
+import Product from '../components/product'
 
-export default function Home() {
+export default function Home({ products }) {
   return (
     <div>
       <Head>
@@ -128,6 +129,7 @@ export default function Home() {
           </Flex>
         </Stack>
       </Container>
+
       <Box maxW="7xl" mx={'auto'} pt={5} px={{ base: 2, sm: 12, md: 17 }}>
         <chakra.h1
           textAlign={'center'}
@@ -135,34 +137,50 @@ export default function Home() {
           py={10}
           fontWeight={'bold'}
         >
-          Our company is expanding, you could be too.
+          Nos meilleures ventes
         </chakra.h1>
         <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
-          <StatsCard
-            title={'Users'}
-            stat={'5,000'}
-            icon={<BsPerson size={'3em'} />}
-          />
-          <StatsCard
-            title={'Servers'}
-            stat={'1,000'}
-            icon={<FiServer size={'3em'} />}
-          />
-          <StatsCard
-            title={'Datacenters'}
-            stat={'7'}
-            icon={<GoLocation size={'3em'} />}
-          />
+          <Link href={`/products/${products.products[0].id}`}>
+            <a>
+              <Product
+                imageSrc={products.products[0].image[0]}
+                imageAlt={products.products[0].name}
+                title={products.products[0].name}
+                category={products.products[0].category}
+                price={products.products[0].price}
+              />
+            </a>
+          </Link>
+          <Link href={`/products/${products.products[1].id}`}>
+            <a>
+              <Product
+                imageSrc={products.products[1].image[0]}
+                imageAlt={products.products[1].name}
+                title={products.products[1].name}
+                category={products.products[1].category}
+                price={products.products[1].price}
+              />
+            </a>
+          </Link>
+          <Link href={`/products/${products.products[2].id}`}>
+            <a>
+              <Product
+                imageSrc={products.products[2].image[0]}
+                imageAlt={products.products[2].name}
+                title={products.products[2].name}
+                category={products.products[2].category}
+                price={products.products[2].price}
+              />
+            </a>
+          </Link>
         </SimpleGrid>
+        <Flex py={10} justifyContent={'center'}><Link href={'/products'}>
+          <Button bg='teal.600' color={'white'} _hover={{background:'teal.300'}}>Afficher tous les produits</Button></Link>
+          </Flex>
       </Box>
     </div>
   )
 }
-const PlayIcon = createIcon({
-  displayName: 'PlayIcon',
-  viewBox: '0 0 58 58',
-  d: 'M28.9999 0.562988C13.3196 0.562988 0.562378 13.3202 0.562378 29.0005C0.562378 44.6808 13.3196 57.438 28.9999 57.438C44.6801 57.438 57.4374 44.6808 57.4374 29.0005C57.4374 13.3202 44.6801 0.562988 28.9999 0.562988ZM39.2223 30.272L23.5749 39.7247C23.3506 39.8591 23.0946 39.9314 22.8332 39.9342C22.5717 39.9369 22.3142 39.8701 22.0871 39.7406C21.86 39.611 21.6715 39.4234 21.5408 39.1969C21.4102 38.9705 21.3421 38.7133 21.3436 38.4519V19.5491C21.3421 19.2877 21.4102 19.0305 21.5408 18.8041C21.6715 18.5776 21.86 18.3899 22.0871 18.2604C22.3142 18.1308 22.5717 18.064 22.8332 18.0668C23.0946 18.0696 23.3506 18.1419 23.5749 18.2763L39.2223 27.729C39.4404 27.8619 39.6207 28.0486 39.7458 28.2713C39.8709 28.494 39.9366 28.7451 39.9366 29.0005C39.9366 29.2559 39.8709 29.507 39.7458 29.7297C39.6207 29.9523 39.4404 30.1391 39.2223 30.272Z',
-})
 
 export const Blob = (IconProps) => {
   return (
@@ -196,9 +214,7 @@ function StatsCard(StatsCardProps) {
     >
       <Flex justifyContent={'space-between'}>
         <Box pl={{ base: 2, md: 4 }}>
-          <StatLabel fontWeight={'medium'}>
-            {title}
-          </StatLabel>
+          <StatLabel fontWeight={'medium'}>{title}</StatLabel>
           <StatNumber fontSize={'2xl'} fontWeight={'medium'}>
             {stat}
           </StatNumber>
@@ -213,4 +229,15 @@ function StatsCard(StatsCardProps) {
       </Flex>
     </Stat>
   )
+}
+
+export async function getStaticProps() {
+  const products = await fetch('https://kds-js.github.io/shop.json').then((r) =>
+    r.json()
+  )
+  return {
+    props: {
+      products,
+    },
+  }
 }

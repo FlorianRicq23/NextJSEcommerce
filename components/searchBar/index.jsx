@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Input } from '@chakra-ui/react'
+import { Box, Button, Flex, Image, Input } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
@@ -21,6 +21,7 @@ export default function SearchBar() {
     })
     setValue('')
   }
+  
 
   useEffect(() => {
     async function fetchData() {
@@ -39,16 +40,16 @@ export default function SearchBar() {
           <Flex>
             <Input
               bg={'white'}
-              placeholder="Search product"
+              placeholder="Rechercher un produit"
               type="text"
               value={value}
               onChange={onChange}
             />
-            <Button type="submit">Search</Button>
+            <Button type="submit">Rechercher</Button>
           </Flex>
         </form>
         {data ? (
-          <div className="dropdown">
+          <Flex display={{base:'none', md:'block'}} direction={'column'} border='1px solid gray;' bg='white' w={600} _empty={{border:'none'}}>
             {data.products
               .filter((item) => {
                 const searchTerm = value.toLowerCase()
@@ -62,15 +63,25 @@ export default function SearchBar() {
               })
               .slice(0, 10)
               .map((item) => (
-                <Box key={item.id}>
+                <Box key={item.id} onClick={() => setValue('')}>
                   <Link href={`/products/${item.id}`}>
                     <a>
-                      {item.name}
+                      <Flex alignItems={'center '}>
+                        <Image
+                          rounded={'md'}
+                          alt={'product image'}
+                          src={item.image[0]}
+                          fit={'cover'}
+                          align={'center'}
+                          h={16}
+                        />{' '}
+                        {item.name}
+                      </Flex>
                     </a>
                   </Link>
                 </Box>
               ))}
-          </div>
+          </Flex>
         ) : null}
       </Box>
     </>

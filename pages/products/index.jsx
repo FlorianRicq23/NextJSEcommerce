@@ -102,7 +102,7 @@ export default function Products({ products }) {
           </Box>
           <Box>
             <Heading fontSize={18} borderBottom="solid 1px black">
-              Price
+              Prix
             </Heading>
             <Box p={5}>
               <RangeSlider

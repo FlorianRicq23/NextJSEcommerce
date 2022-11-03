@@ -13,7 +13,7 @@ const Product = ({ imageSrc, imageAlt, title, category, price }) => (
     <Box>
       {price}
       <Box as="span" color="gray.600" fontSize="sm">
-        € unit
+        € unité
       </Box>
     </Box>
   </Stack>
