@@ -23,8 +23,7 @@ function Footer() {
       <Flex flexDirection={'column'}>
         <Box
           justifyContent={'space-between'}
-          bg="#e9edf0"
-          borderTop={'1px solid silver'}
+          bg={useColorModeValue('gray.100', 'teal.600')}
           padding="20px 8% 20px 8%"
         >
           <SimpleGrid columns={{ base: 1, md: 3 }} spacing={10}>
@@ -52,7 +51,7 @@ function Footer() {
           </SimpleGrid>
         </Box>
 
-        <Box bg="teal.600" color="white">
+        <Box bg={useColorModeValue('teal.600', 'gray.800')} color="white">
           <Container
             as={Stack}
             maxW={'6xl'}

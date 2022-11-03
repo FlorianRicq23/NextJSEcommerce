@@ -10,6 +10,7 @@ import {
   CheckboxGroup,
   Stack,
   Checkbox,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -81,7 +82,7 @@ export default function Products({ products }) {
       <Flex p="0 8%" mt={15} mb={15}>
         <Flex flexDirection="column" w={'200px'} p={15} display={{base:'none', md:'block'}}>
           <Box>
-            <Heading fontSize={18} borderBottom="solid 1px black">
+            <Heading fontSize={18} borderBottom={useColorModeValue("solid 1px black", "solid 1px gray")}>
               Categories
             </Heading>
             <Box p={5}>
@@ -101,7 +102,7 @@ export default function Products({ products }) {
             </Box>
           </Box>
           <Box>
-            <Heading fontSize={18} borderBottom="solid 1px black">
+            <Heading fontSize={18} borderBottom={useColorModeValue("solid 1px black", "solid 1px gray")}>
               Prix
             </Heading>
             <Box p={5}>

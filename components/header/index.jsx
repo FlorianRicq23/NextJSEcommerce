@@ -8,27 +8,39 @@ import {
   Stack,
   Icon,
   Image,
+  useColorMode,
+  Button,
+  useColorModeValue,
 } from '@chakra-ui/react'
-import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
+import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from '@chakra-ui/icons'
 import { useRouter } from 'next/router'
 import SearchBar from '../searchBar'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import CartItemHeader from '../cartItemHeader'
 
-const NavLinkComponent = ({ title, link, current, isOpen, onClose, onOpen }) => (
-  <Box onClick={isOpen ? onClose : onOpen}><Link href={link}>
-    <a style={current === link ? { fontWeight: 'bold' } : null}>{title}</a>
-  </Link></Box>
-  
+const NavLinkComponent = ({
+  title,
+  link,
+  current,
+  isOpen,
+  onClose,
+  onOpen,
+}) => (
+  <Box onClick={isOpen ? onClose : onOpen}>
+    <Link href={link}>
+      <a style={current === link ? { fontWeight: 'bold' } : null}>{title}</a>
+    </Link>
+  </Box>
 )
 
 function Header() {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const { colorMode, toggleColorMode } = useColorMode()
   const router = useRouter()
   const currentRoute = router.pathname
   return (
     <>
-      <Box bg={'gray.100'} px={4}>
+      <Box bg={useColorModeValue('gray.100', 'gray.800')} px={4}>
         <Flex
           h={16}
           alignItems={'center'}
@@ -65,7 +77,16 @@ function Header() {
               />
             </HStack>
           </HStack>
-          <CartItemHeader />
+          <Flex gap={5}>
+            <Icon
+             onClick={toggleColorMode}
+              cursor={'pointer'}
+              as={colorMode === 'light' ? MoonIcon : SunIcon}
+              height={'30px'}
+              width={'25px'}
+            />
+            <CartItemHeader />
+          </Flex>
         </Flex>
         <Box p={4}>
           <SearchBar />
@@ -94,6 +115,5 @@ function Header() {
     </>
   )
 }
-
 
 export default Header
