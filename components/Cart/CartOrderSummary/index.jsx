@@ -52,7 +52,7 @@ import {
             </Text>
           </Flex>
         </Stack>
-        <Button colorScheme="blue" size="lg" fontSize="md" rightIcon={<FaArrowRight />}>
+        <Button colorScheme="teal" size="lg" fontSize="md" rightIcon={<FaArrowRight />}>
           Valider
         </Button>
       </Stack>
