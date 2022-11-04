@@ -166,7 +166,7 @@ export default function Products({ products }) {
 }
 
 export async function getStaticProps() {
-  const products = await fetch('https://kds-js.github.io/shop.json').then((r) =>
+  const products = await fetch('https://nextjs-ecommerce-florianricq23.vercel.app/api/products').then((r) =>
     r.json()
   )
   return {
