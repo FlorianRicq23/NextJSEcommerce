@@ -26,12 +26,9 @@ import { MdLocalShipping } from 'react-icons/md'
 import { useMyShoppingCart } from '../../utils/hooks'
 import { useState, useEffect } from 'react'
 
-function ProductDetailPage({ products, id }) {
+function ProductDetailPage({ product }) {
   const { myShoppingCart, setMyShoppingCart } = useMyShoppingCart()
-
-  let product = products.products[id]
   let title = `NextJS E-Shop -  ${product.name}`
-  
 
   const addToCart = () => {
     setMyShoppingCart((myShoppingCart) => {
@@ -191,19 +188,19 @@ function ProductDetailPage({ products, id }) {
 }
 
 export async function getStaticProps({ params }) {
-  const products = await fetch(`https://kds-js.github.io/shop.json`).then((r) =>
+  const id = params.id
+  const product = await fetch(`https://nextjs-ecommerce-florianricq23.vercel.app/api/products/${id}`).then((r) =>
     r.json()
   )
-  const id = params.id
+  
   return {
     props: {
-      products,
-      id,
+      product
     },
   }
 }
 export async function getStaticPaths() {
-  const products = await fetch('https://kds-js.github.io/shop.json').then((r) =>
+  const products = await fetch('https://nextjs-ecommerce-florianricq23.vercel.app/api/products').then((r) =>
     r.json()
   )
   return {
