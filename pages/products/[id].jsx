@@ -187,9 +187,9 @@ function ProductDetailPage({ product }) {
   )
 }
 
-export async function getStaticProps({ params }) {
+/* export async function getServerSideProps({ params }) {
   const id = params.id
-  const product = await fetch(`https://nextjs-ecommerce-florianricq23.vercel.app/api/products/${id}`).then((r) =>
+  const product = await fetch(`http://localhost:3000/api/products/${id}`).then((r) =>
     r.json()
   )
   
@@ -200,7 +200,7 @@ export async function getStaticProps({ params }) {
   }
 }
 export async function getStaticPaths() {
-  const products = await fetch('https://nextjs-ecommerce-florianricq23.vercel.app/api/products').then((r) =>
+  const products = await fetch('http://localhost:3000/api/products').then((r) =>
     r.json()
   )
   return {
@@ -208,6 +208,19 @@ export async function getStaticPaths() {
       params: { id: product.id.toString() },
     })),
     fallback: false,
+  }
+} */
+
+export async function getServerSideProps({params}) {
+  const id = params.id
+  const product = await fetch(`http://localhost:3000/api/products/${id}`).then((r) =>
+    r.json()
+  )
+  
+  return {
+    props: {
+      product
+    },
   }
 }
 

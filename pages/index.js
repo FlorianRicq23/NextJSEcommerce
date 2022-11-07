@@ -202,8 +202,8 @@ export const Blob = (IconProps) => {
 }
 
 
-export async function getStaticProps() {
-  const products = await fetch('https://kds-js.github.io/shop.json').then((r) =>
+export async function getServerSideProps() {
+  const products = await fetch('http://localhost:3000/api/products').then((r) =>
     r.json()
   )
   return {

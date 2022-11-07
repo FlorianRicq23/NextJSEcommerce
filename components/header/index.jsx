@@ -75,6 +75,11 @@ function Header() {
                 link={'/products'}
                 current={currentRoute}
               />
+              <NavLinkComponent
+                title={'Créer un produit'}
+                link={'/post-product'}
+                current={currentRoute}
+              />
             </HStack>
           </HStack>
           <Flex gap={5}>
@@ -106,6 +111,11 @@ function Header() {
               <NavLinkComponent
                 title={'Produits'}
                 link={'/products'}
+                current={currentRoute}
+              />
+              <NavLinkComponent
+                title={'Créer un produit'}
+                link={'/post-product'}
                 current={currentRoute}
               />
             </Stack>
