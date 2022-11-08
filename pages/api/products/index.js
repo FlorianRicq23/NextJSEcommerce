@@ -21,7 +21,7 @@ export default function handler(req, res) {
       image
     }
     dataProducts.products.push(newProduct)
-    res.status(201).json(newProduct)
+    return res.status(201).send(newProduct)
   }
 }
 

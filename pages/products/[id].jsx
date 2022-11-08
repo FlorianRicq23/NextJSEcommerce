@@ -33,12 +33,12 @@ function ProductDetailPage({ product }) {
   let title = `NextJS E-Shop -  ${product.name}`
   const router = useRouter()
 
-  const deleteProduct = async productId => {
+  const deleteProduct = async (productId) => {
     const response = await fetch(`/api/products/${productId}`, {
-      method: 'DELETE'
+      method: 'DELETE',
     })
     router.push({
-      pathname: '/products'
+      pathname: '/products',
     })
   }
 
@@ -134,10 +134,17 @@ function ProductDetailPage({ product }) {
                       {product.category}
                     </ListItem>
                   </List>
-                  <Flex gap={2}>
-                    <Button colorScheme={'red'} onClick={() => deleteProduct(product.id)}>Supprimer le produit</Button>
-                    <Button colorScheme={'green'}>Modifier le produit</Button>
-                  </Flex>
+                  {product.id > 10 ? (
+                    <Flex gap={2}>
+                      <Button
+                        colorScheme={'red'}
+                        onClick={() => deleteProduct(product.id)}
+                      >
+                        Supprimer le produit
+                      </Button>
+                      <Button colorScheme={'green'}>Modifier le produit</Button>
+                    </Flex>
+                  ) : null}
                 </Box>
               </Stack>
 
@@ -199,15 +206,15 @@ export async function getStaticPaths() {
   }
 } */
 
-export async function getServerSideProps({params}) {
+export async function getServerSideProps({ params }) {
   const id = params.id
-  const product = await fetch(`https://nextjs-ecommerce-florianricq23.vercel.app/api/products/${id}`).then((r) =>
-    r.json()
-  )
-  
+  const product = await fetch(
+    `https://nextjs-ecommerce-florianricq23.vercel.app/api/products/${id}`
+  ).then((r) => r.json())
+
   return {
     props: {
-      product
+      product,
     },
   }
 }
