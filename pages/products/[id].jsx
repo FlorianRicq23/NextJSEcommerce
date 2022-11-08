@@ -182,7 +182,7 @@ function ProductDetailPage({ product }) {
   )
 }
 
-export async function getStaticProps({ params }) {
+/* export async function getStaticProps({ params }) {
   const id = params.id
   const product = await fetch(`https://nextjs-ecommerce-florianricq23.vercel.app/api/products/${id}`).then(
     (r) => r.json()
@@ -204,9 +204,9 @@ export async function getStaticPaths() {
     })),
     fallback: false,
   }
-}
+} */
 
-/* export async function getServerSideProps({ params }) {
+export async function getServerSideProps({ params }) {
   const id = params.id
   const product = await fetch(
     `https://nextjs-ecommerce-florianricq23.vercel.app/api/products/${id}`
@@ -217,6 +217,6 @@ export async function getStaticPaths() {
       product,
     },
   }
-} */
+}
 
 export default ProductDetailPage
