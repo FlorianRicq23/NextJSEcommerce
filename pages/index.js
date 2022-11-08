@@ -143,7 +143,7 @@ export default function Home({ products }) {
           <Link href={`/products/${products.products[0].id}`}>
             <a>
               <Product
-                imageSrc={products.products[0].image[0]}
+                imageSrc={`/Images/shop/${products.products[0].image[0]}`}
                 imageAlt={products.products[0].name}
                 title={products.products[0].name}
                 category={products.products[0].category}
@@ -154,7 +154,7 @@ export default function Home({ products }) {
           <Link href={`/products/${products.products[1].id}`}>
             <a>
               <Product
-                imageSrc={products.products[1].image[0]}
+                imageSrc={`/Images/shop/${products.products[1].image[0]}`}
                 imageAlt={products.products[1].name}
                 title={products.products[1].name}
                 category={products.products[1].category}
@@ -165,7 +165,7 @@ export default function Home({ products }) {
           <Link href={`/products/${products.products[2].id}`}>
             <a>
               <Product
-                imageSrc={products.products[2].image[0]}
+                imageSrc={`/Images/shop/${products.products[2].image[0]}`}
                 imageAlt={products.products[2].name}
                 title={products.products[2].name}
                 category={products.products[2].category}

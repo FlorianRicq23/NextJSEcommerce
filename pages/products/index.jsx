@@ -147,7 +147,7 @@ export default function Products({ products }) {
                   <Link href={`/products/${product.id}`}>
                     <a>
                       <Product
-                        imageSrc={product.image[0]}
+                        imageSrc={`/Images/shop/${product.image[0]}`}
                         imageAlt={product.name}
                         title={product.name}
                         category={product.category}
@@ -165,7 +165,7 @@ export default function Products({ products }) {
   )
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const products = await fetch('http://localhost:3000/api/products').then((r) =>
     r.json()
   )

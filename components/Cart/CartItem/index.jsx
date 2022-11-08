@@ -52,7 +52,7 @@ export const CartItem = (props) => {
       <CartProductMeta
         name={name}
         description={description}
-        image={image[0]}
+        image={`/Images/shop/${image[0]}`}
         isGiftWrapping={isGiftWrapping}
       />
 

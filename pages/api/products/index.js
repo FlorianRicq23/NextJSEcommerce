@@ -3,7 +3,7 @@ import dataProducts from '../../../database/data.json'
 
 export default function handler(req, res) {
   if (req.method === 'GET') {
-    res.status(200).json(dataProducts)
+    return res.status(200).send(dataProducts)
   } else if (req.method === 'POST') {
     const name = req.body.name
     const quantity = req.body.quantity
@@ -21,7 +21,7 @@ export default function handler(req, res) {
       image
     }
     dataProducts.products.push(newProduct)
-    res.status(201).json(newProduct)
+    return res.status(201).send(newProduct)
   }
 }
 

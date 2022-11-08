@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { Fragment } from 'react'
 import Footer from '../../components/footer'
 import Header from '../../components/header'
+import { useRouter } from 'next/router'
+
 import {
   Box,
   chakra,
@@ -29,6 +31,16 @@ import { useState, useEffect } from 'react'
 function ProductDetailPage({ product }) {
   const { myShoppingCart, setMyShoppingCart } = useMyShoppingCart()
   let title = `NextJS E-Shop -  ${product.name}`
+  const router = useRouter()
+
+  const deleteProduct = async productId => {
+    const response = await fetch(`/api/products/${productId}`, {
+      method: 'DELETE'
+    })
+    router.push({
+      pathname: '/products'
+    })
+  }
 
   const addToCart = () => {
     setMyShoppingCart((myShoppingCart) => {
@@ -43,33 +55,6 @@ function ProductDetailPage({ product }) {
     })
   }
 
-/*   const addToCart2 = () => {
-    setMyShoppingCart((myShoppingCart) => {
-      let isAlreadyInCart = false
-      for (let i = 0; i < myShoppingCart.length; i++) {
-        if (myShoppingCart[i].id == product.id) {
-          isAlreadyInCart = true
-        }
-      }
-
-      if (isAlreadyInCart) return myShoppingCart
-      else return [product, ...myShoppingCart]
-    })
-  }
-  
-  const addToCart3 = () => {
-    let isAlreadyInCart = false
-    //const items = JSON.parse(localStorage.getItem('cart'))
-    for (let i = 0; i < myShoppingCart.length; i++) {
-      if (items[i].id == product.id) {
-        isAlreadyInCart = true
-        items[i].quantity+=1
-      }
-    }
-    if (isAlreadyInCart) localStorage.setItem( 'cart',JSON.stringify([...items]))
-    else localStorage.setItem( 'cart',JSON.stringify([...items, product])) 
-  } */
-
   return (
     <>
       <Head>
@@ -78,7 +63,6 @@ function ProductDetailPage({ product }) {
       </Head>
       <Box>
         <Container maxW={'7xl'}>
-          
           <SimpleGrid
             columns={{ base: 1, lg: 2 }}
             spacing={{ base: 8, md: 10 }}
@@ -88,7 +72,7 @@ function ProductDetailPage({ product }) {
               <Image
                 rounded={'md'}
                 alt={'product image'}
-                src={product.image[0]}
+                src={`/Images/shop/${product.image[0]}`}
                 fit={'cover'}
                 align={'center'}
                 w={'100%'}
@@ -142,7 +126,7 @@ function ProductDetailPage({ product }) {
                     Details du produit
                   </Text>
 
-                  <List spacing={2}>
+                  <List spacing={2} mb={'4'}>
                     <ListItem>
                       <Text as={'span'} fontWeight={'bold'}>
                         Category:
@@ -150,6 +134,10 @@ function ProductDetailPage({ product }) {
                       {product.category}
                     </ListItem>
                   </List>
+                  <Flex gap={2}>
+                    <Button colorScheme={'red'} onClick={() => deleteProduct(product.id)}>Supprimer le produit</Button>
+                    <Button colorScheme={'green'}>Modifier le produit</Button>
+                  </Flex>
                 </Box>
               </Stack>
 
@@ -187,15 +175,15 @@ function ProductDetailPage({ product }) {
   )
 }
 
-/* export async function getServerSideProps({ params }) {
+export async function getStaticProps({ params }) {
   const id = params.id
-  const product = await fetch(`http://localhost:3000/api/products/${id}`).then((r) =>
-    r.json()
+  const product = await fetch(`http://localhost:3000/api/products/${id}`).then(
+    (r) => r.json()
   )
-  
+
   return {
     props: {
-      product
+      product,
     },
   }
 }
@@ -209,9 +197,9 @@ export async function getStaticPaths() {
     })),
     fallback: false,
   }
-} */
+}
 
-export async function getServerSideProps({params}) {
+/* export async function getServerSideProps({params}) {
   const id = params.id
   const product = await fetch(`http://localhost:3000/api/products/${id}`).then((r) =>
     r.json()
@@ -222,6 +210,6 @@ export async function getServerSideProps({params}) {
       product
     },
   }
-}
+} */
 
 export default ProductDetailPage

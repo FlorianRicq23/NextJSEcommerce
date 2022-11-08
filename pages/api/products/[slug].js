@@ -5,12 +5,12 @@ export default function handler(req, res) {
   let productId = req.query.slug
   if (req.method === 'GET') {
     const product = dataProducts.products.find((product) => product.id === parseInt(productId))
-    res.status(200).json(product)
+    return res.status(200).send(product)
   } else if (req.method === 'DELETE') {
     const deletedproduct = dataProducts.products.find((product) => product.id === parseInt(productId))
     const index = dataProducts.products.findIndex((product) => product.id === parseInt(productId))
     dataProducts.products.splice(index, 1)
-    res.status(204).json(deletedproduct)
+    return res.status(204).send(deletedproduct)
   } else {
     res.status(405).end()
   }
