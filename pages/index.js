@@ -202,7 +202,7 @@ export const Blob = (IconProps) => {
 }
 
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const products = await fetch('https://nextjs-ecommerce-florianricq23.vercel.app/api/products').then((r) =>
     r.json()
   )
