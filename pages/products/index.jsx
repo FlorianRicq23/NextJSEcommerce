@@ -165,7 +165,7 @@ export default function Products({ products }) {
   )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const products = await fetch('https://nextjs-ecommerce-florianricq23.vercel.app/api/products').then((r) =>
     r.json()
   )
