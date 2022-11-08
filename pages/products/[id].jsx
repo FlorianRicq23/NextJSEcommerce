@@ -201,7 +201,7 @@ export async function getStaticPaths() {
 
 export async function getServerSideProps({params}) {
   const id = params.id
-  const product = await fetch(`http://localhost:3000/api/products/${id}`).then((r) =>
+  const product = await fetch(`https://nextjs-ecommerce-florianricq23.vercel.app/api/products/${id}`).then((r) =>
     r.json()
   )
   
