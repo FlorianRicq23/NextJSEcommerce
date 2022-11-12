@@ -174,9 +174,17 @@ export default function Home({ products }) {
             </a>
           </Link>
         </SimpleGrid>
-        <Flex py={10} justifyContent={'center'}><Link href={'/products'}>
-          <Button bg='teal.600' color={'white'} _hover={{background:'teal.300'}}>Afficher tous les produits</Button></Link>
-          </Flex>
+        <Flex py={10} justifyContent={'center'}>
+          <Link href={'/products'}>
+            <Button
+              bg="teal.600"
+              color={'white'}
+              _hover={{ background: 'teal.300' }}
+            >
+              Afficher tous les produits
+            </Button>
+          </Link>
+        </Flex>
       </Box>
     </div>
   )
@@ -201,11 +209,10 @@ export const Blob = (IconProps) => {
   )
 }
 
-
 export async function getServerSideProps() {
-  const products = await fetch('https://nextjs-ecommerce-florianricq23.vercel.app/api/products').then((r) =>
-    r.json()
-  )
+  const products = await fetch(
+    'https://nextjs-ecommerce-florianricq23.vercel.app/api/products'
+  ).then((r) => r.json())
   return {
     props: {
       products,
