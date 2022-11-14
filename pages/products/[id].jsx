@@ -1,8 +1,8 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-
 import {
   Box,
+  useColorModeValue,
   Container,
   Stack,
   Text,
@@ -13,9 +13,10 @@ import {
   Heading,
   SimpleGrid,
   StackDivider,
-  useColorModeValue,
   List,
   ListItem,
+  FormControl,
+  Input,
 } from '@chakra-ui/react'
 import { MdLocalShipping } from 'react-icons/md'
 import { useMyShoppingCart } from '../../utils/hooks'
@@ -26,12 +27,14 @@ function ProductDetailPage({ product }) {
   let title = `NextJS E-Shop -  ${product.name}`
   const router = useRouter()
 
-  const [name, setName] = useState('nouveau nom')
+  const [name, setName] = useState(product.name)
   const [quantity, setQuantity] = useState(product.quantity)
   const [category, setCategory] = useState(product.category)
   const [price, setPrice] = useState(product.price)
   const [description, setDescription] = useState(product.description)
   const [image, setImage] = useState(product.image)
+  const [displayForm, setDisplayForm] = useState(false)
+  const color = useColorModeValue('gray.900', 'gray.400')
 
   const editProduct = async (productId) => {
     const response = await fetch(`/api/products/${productId}`, {
@@ -101,20 +104,39 @@ function ProductDetailPage({ product }) {
             </Flex>
             <Stack spacing={{ base: 6, md: 10 }}>
               <Box as={'header'}>
-                <Heading
-                  lineHeight={1.1}
-                  fontWeight={600}
-                  fontSize={{ base: '2xl', sm: '4xl', lg: '5xl' }}
-                >
-                  {product.name}
-                </Heading>
-                <Text
-                  color={useColorModeValue('gray.900', 'gray.400')}
-                  fontWeight={300}
-                  fontSize={'2xl'}
-                >
-                  {product.price} €
-                </Text>
+                {displayForm ? (
+                  <FormControl isRequired mb={5}>
+                    <Input
+                      placeholder="Product name"
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                  </FormControl>
+                ) : (
+                  <Heading
+                    lineHeight={1.1}
+                    fontWeight={600}
+                    fontSize={{ base: '2xl', sm: '4xl', lg: '5xl' }}
+                  >
+                    {product.name}
+                  </Heading>
+                )}
+
+                {displayForm ? (
+                  <FormControl isRequired mb={5}>
+                    <Input
+                      placeholder="Product price"
+                      type="text"
+                      value={price}
+                      onChange={(e) => setPrice(e.target.value)}
+                    />
+                  </FormControl>
+                ) : (
+                  <Text color={color} fontWeight={300} fontSize={'2xl'}>
+                    {product.price} €
+                  </Text>
+                )}
               </Box>
 
               <Stack
@@ -162,8 +184,30 @@ function ProductDetailPage({ product }) {
                       >
                         Supprimer le produit
                       </Button>
-                      <Button colorScheme={'green'}
-                        onClick={() => editProduct(product.id)}>Modifier le produit</Button>
+
+                      {displayForm ? (
+                        <>
+                          <Button
+                            colorScheme={'yellow'}
+                            onClick={() => setDisplayForm(!displayForm)}
+                          >
+                            Annuler la modification
+                          </Button>
+                          <Button
+                            colorScheme={'green'}
+                            onClick={() => editProduct(product.id)}
+                          >
+                            Valider la modification
+                          </Button>
+                        </>
+                      ) : (
+                        <Button
+                          colorScheme={'green'}
+                          onClick={() => setDisplayForm(!displayForm)}
+                        >
+                          Modifier le produit
+                        </Button>
+                      )}
                     </Flex>
                   ) : null}
                 </Box>
