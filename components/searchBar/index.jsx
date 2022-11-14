@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Image, Input } from '@chakra-ui/react'
+import { Box, Button, Flex, Icon, Image, Input, useColorModeValue } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
@@ -6,6 +6,8 @@ import Link from 'next/link'
 export default function SearchBar() {
   const [value, setValue] = useState('')
   const [data, setData] = useState()
+
+  const buttonSearchImage = useColorModeValue('/Images/search-gif-black.gif', '/Images/search-gif-white.gif')
 
   const router = useRouter()
 
@@ -21,7 +23,6 @@ export default function SearchBar() {
     })
     setValue('')
   }
-  
 
   useEffect(() => {
     async function fetchData() {
@@ -45,11 +46,20 @@ export default function SearchBar() {
               value={value}
               onChange={onChange}
             />
-            <Button type="submit">Rechercher</Button>
+            <Button type="submit" p={0}>
+              <Image h='100%' alt={'product image'} src={buttonSearchImage} />
+            </Button>
           </Flex>
         </form>
         {data ? (
-          <Flex display={{base:'none', md:'block'}} direction={'column'} border='1px solid gray;' bg='white' w={600} _empty={{border:'none'}}>
+          <Flex
+            display={{ base: 'none', md: 'block' }}
+            direction={'column'}
+            border="1px solid gray;"
+            bg="white"
+            w={600}
+            _empty={{ border: 'none' }}
+          >
             {data.products
               .filter((item) => {
                 const searchTerm = value.toLowerCase()

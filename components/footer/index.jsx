@@ -24,9 +24,9 @@ function Footer() {
         <Box
           justifyContent={'space-between'}
           bg={useColorModeValue('gray.100', 'teal.600')}
-          padding="20px 8% 20px 8%"
+          padding={{base:"20px", md:"20px 8% 20px 8%"}}
         >
-          <SimpleGrid columns={{ base: 1, md: 3 }} spacing={10}>
+          <SimpleGrid columns={3} spacing={{base:5, md:10}}>
             <Feature
               icon={<Icon as={FcAssistant} w={10} h={10} />}
               title={'Satisfait'}
@@ -96,17 +96,17 @@ const Feature = (FeatureProps) => {
   return (
     <Stack>
       <Flex
-        h={16}
+        h={{base:7, md:16}}
         align={'center'}
         justify={'center'}
         mb={1}
       >
         {FeatureProps.icon}
       </Flex>
-      <Text fontWeight={600} textAlign="center">
+      <Text fontWeight={600} textAlign="center" display={{base: 'none', md:'block'}}>
         {FeatureProps.title}
       </Text>
-      <Text color={'gray.600'} textAlign="center">
+      <Text color={'gray.600'} textAlign="center" display={{base: 'none', md:'block'}}>
         {FeatureProps.text}
       </Text>
     </Stack>

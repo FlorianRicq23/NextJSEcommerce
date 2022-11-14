@@ -112,11 +112,17 @@ function Header() {
                 title={'Produits'}
                 link={'/products'}
                 current={currentRoute}
+                isOpen={isOpen}
+                onClose={onClose}
+                onOpen={onOpen}
               />
               <NavLinkComponent
                 title={'Créer un produit'}
                 link={'/post-product'}
                 current={currentRoute}
+                isOpen={isOpen}
+                onClose={onClose}
+                onOpen={onOpen}
               />
             </Stack>
           </Box>

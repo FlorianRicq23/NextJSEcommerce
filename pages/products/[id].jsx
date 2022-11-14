@@ -17,6 +17,8 @@ import {
   ListItem,
   FormControl,
   Input,
+  Textarea,
+  Select,
 } from '@chakra-ui/react'
 import { MdLocalShipping } from 'react-icons/md'
 import { useMyShoppingCart } from '../../utils/hooks'
@@ -34,7 +36,8 @@ function ProductDetailPage({ product }) {
   const [description, setDescription] = useState(product.description)
   const [image, setImage] = useState(product.image)
   const [displayForm, setDisplayForm] = useState(false)
-  const color = useColorModeValue('gray.900', 'gray.400')
+  const colorPrice = useColorModeValue('gray.900', 'gray.400')
+  const colorDescription = useColorModeValue('gray.500', 'gray.400')
 
   const editProduct = async (productId) => {
     const response = await fetch(`/api/products/${productId}`, {
@@ -51,6 +54,7 @@ function ProductDetailPage({ product }) {
         'Content-Type': 'application/json',
       },
     })
+    setDisplayForm(false)
     router.push({
       pathname: `/products/${productId}`,
     })
@@ -133,7 +137,7 @@ function ProductDetailPage({ product }) {
                     />
                   </FormControl>
                 ) : (
-                  <Text color={color} fontWeight={300} fontSize={'2xl'}>
+                  <Text color={colorPrice} fontWeight={300} fontSize={'2xl'}>
                     {product.price} €
                   </Text>
                 )}
@@ -149,13 +153,24 @@ function ProductDetailPage({ product }) {
                 }
               >
                 <VStack spacing={{ base: 4, sm: 6 }}>
-                  <Text
-                    color={useColorModeValue('gray.500', 'gray.400')}
-                    fontSize={'2xl'}
-                    fontWeight={'300'}
-                  >
-                    {product.description}
-                  </Text>
+                  {displayForm ? (
+                    <FormControl isRequired mb={5}>
+                      <Textarea
+                        placeholder="Product description"
+                        type="text"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                      />
+                    </FormControl>
+                  ) : (
+                    <Text
+                      color={colorDescription}
+                      fontSize={'2xl'}
+                      fontWeight={'300'}
+                    >
+                      {product.description}
+                    </Text>
+                  )}
                 </VStack>
                 <Box>
                   <Text
@@ -169,18 +184,37 @@ function ProductDetailPage({ product }) {
                   </Text>
 
                   <List spacing={2} mb={'4'}>
+                  {displayForm ? (
+                    <FormControl isRequired mb={5}>
+                    <Select
+                      placeholder="Select category"
+                      name="category"
+                      id="category"
+                      onChange={(e) => setCategory(e.target.value)}
+                      defaultValue={category}
+                    >
+                      <option value="homme">Homme</option>
+                      <option value="femme">Femme</option>
+                      <option value="enfant">Enfant</option>
+                    </Select>
+                  </FormControl>
+                  ) : (
                     <ListItem>
                       <Text as={'span'} fontWeight={'bold'}>
                         Category:
                       </Text>{' '}
                       {product.category}
                     </ListItem>
+                  )}
+
                   </List>
-                  {true || product.id > 10 ? (
-                    <Flex gap={2}>
+                  {product.id > 9 ? (
+                    <Flex direction={{base:'column', sm:'row'}} gap={2}>
                       <Button
                         colorScheme={'red'}
                         onClick={() => deleteProduct(product.id)}
+                        fontSize={{base:12 ,lg:14 }}
+                        h={8}
                       >
                         Supprimer le produit
                       </Button>
@@ -190,12 +224,16 @@ function ProductDetailPage({ product }) {
                           <Button
                             colorScheme={'yellow'}
                             onClick={() => setDisplayForm(!displayForm)}
+                            fontSize={{base:12 ,lg:14 }}
+                            h={8}
                           >
                             Annuler la modification
                           </Button>
                           <Button
                             colorScheme={'green'}
                             onClick={() => editProduct(product.id)}
+                            fontSize={{base:12 ,lg:14 }}
+                            h={8}
                           >
                             Valider la modification
                           </Button>
@@ -204,6 +242,8 @@ function ProductDetailPage({ product }) {
                         <Button
                           colorScheme={'green'}
                           onClick={() => setDisplayForm(!displayForm)}
+                          fontSize={{base:12 ,lg:14 }}
+                          h={8}
                         >
                           Modifier le produit
                         </Button>
