@@ -3,14 +3,12 @@ import { useRouter } from 'next/router'
 import { Box, Button, FormControl, FormLabel, Input, Select } from '@chakra-ui/react'
 
 export default function PostProduct() {
-  const [name, setName] = useState([])
+  const [name, setName] = useState()
   const [quantity, setQuantity] = useState(1)
-  const [category, setCategory] = useState([])
-  const [price, setPrice] = useState(12)
-  const [description, setDescription] = useState(
-    "Fabriqué à la main avec un style saisonnier à l'esprit, il est idéal pour une tenue formelle ou décontractée quelle que soit l'occasion et est un incontournable idéal pour toute garde-robe."
-  )
-  const [image, setImage] = useState(['glastonbury_outfit.jpeg'])
+  const [category, setCategory] = useState()
+  const [price, setPrice] = useState()
+  const [description, setDescription] = useState()
+  const [image, setImage] = useState(['new-product.jpeg'])
   const router = useRouter()
 
   const submitBook = async () => {
@@ -39,6 +37,18 @@ export default function PostProduct() {
         <Input placeholder="Product name" type="text"
           value={name}
           onChange={(e) => setName(e.target.value)} />
+      </FormControl>
+      <FormControl isRequired mb={5}>
+        <FormLabel>Description</FormLabel>
+        <Input placeholder="Description" type="text"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)} />
+      </FormControl>
+      <FormControl isRequired mb={5}>
+        <FormLabel>Price</FormLabel>
+        <Input placeholder="Price" type="text"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)} />
       </FormControl>
       <FormControl isRequired mb={5}>
         <FormLabel>Categort</FormLabel>
