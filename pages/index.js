@@ -9,21 +9,10 @@ import {
   Button,
   Image,
   Icon,
-  IconButton,
-  createIcon,
-  IconProps,
   chakra,
   SimpleGrid,
-  Stat,
-  StatLabel,
-  StatNumber,
   useColorModeValue,
 } from '@chakra-ui/react'
-
-import { ReactNode } from 'react'
-import { BsPerson } from 'react-icons/bs'
-import { FiServer } from 'react-icons/fi'
-import { GoLocation } from 'react-icons/go'
 import Link from 'next/link'
 import Product from '../components/product'
 

@@ -14,7 +14,7 @@ export default function handler(req, res) {
     const description = req.body.description
     const image = req.body.image
     const editProduct = {
-      id: productId,
+      id: parseInt(productId),
       name,
       quantity,
       category,

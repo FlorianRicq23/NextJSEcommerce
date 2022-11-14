@@ -1,13 +1,8 @@
 import Head from 'next/head'
-import Link from 'next/link'
-import { Fragment } from 'react'
-import Footer from '../../components/footer'
-import Header from '../../components/header'
 import { useRouter } from 'next/router'
 
 import {
   Box,
-  chakra,
   Container,
   Stack,
   Text,
@@ -19,19 +14,44 @@ import {
   SimpleGrid,
   StackDivider,
   useColorModeValue,
-  VisuallyHidden,
   List,
   ListItem,
 } from '@chakra-ui/react'
-import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa'
 import { MdLocalShipping } from 'react-icons/md'
 import { useMyShoppingCart } from '../../utils/hooks'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 function ProductDetailPage({ product }) {
   const { myShoppingCart, setMyShoppingCart } = useMyShoppingCart()
   let title = `NextJS E-Shop -  ${product.name}`
   const router = useRouter()
+
+  const [name, setName] = useState('nouveau nom')
+  const [quantity, setQuantity] = useState(product.quantity)
+  const [category, setCategory] = useState(product.category)
+  const [price, setPrice] = useState(product.price)
+  const [description, setDescription] = useState(product.description)
+  const [image, setImage] = useState(product.image)
+
+  const editProduct = async (productId) => {
+    const response = await fetch(`/api/products/${productId}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        name,
+        quantity,
+        category,
+        price,
+        description,
+        image,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    router.push({
+      pathname: `/products/${productId}`,
+    })
+  }
 
   const deleteProduct = async (productId) => {
     const response = await fetch(`/api/products/${productId}`, {
@@ -134,7 +154,7 @@ function ProductDetailPage({ product }) {
                       {product.category}
                     </ListItem>
                   </List>
-                  {product.id > 10 ? (
+                  {true || product.id > 10 ? (
                     <Flex gap={2}>
                       <Button
                         colorScheme={'red'}
@@ -142,7 +162,8 @@ function ProductDetailPage({ product }) {
                       >
                         Supprimer le produit
                       </Button>
-                      <Button colorScheme={'green'}>Modifier le produit</Button>
+                      <Button colorScheme={'green'}
+                        onClick={() => editProduct(product.id)}>Modifier le produit</Button>
                     </Flex>
                   ) : null}
                 </Box>

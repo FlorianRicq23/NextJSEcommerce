@@ -11,7 +11,7 @@ export default function PostProduct() {
   const [image, setImage] = useState(['new-product.jpeg'])
   const router = useRouter()
 
-  const submitBook = async () => {
+  const submitProduct = async () => {
     const response = await fetch('/api/products', {
       method: 'POST',
       body: JSON.stringify({
@@ -60,7 +60,7 @@ export default function PostProduct() {
           <option value="enfant">Enfant</option>
         </Select>
       </FormControl>
-      <Button onClick={submitBook} mb={5}>Submit book</Button>
+      <Button onClick={submitProduct} mb={5}>Add product</Button>
     </Box>
   )
 }
