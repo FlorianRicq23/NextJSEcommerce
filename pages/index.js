@@ -12,11 +12,20 @@ import {
   chakra,
   SimpleGrid,
   useColorModeValue,
+  Spinner,
 } from '@chakra-ui/react'
 import Link from 'next/link'
 import Product from '../components/product'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
 export default function Home({ products }) {
+  const [isLoading, setIsLoading] = useState(true)
+  const router = useRouter()
+
+  useEffect(() => {
+    router.isReady && setIsLoading(false)
+  }, [])
   return (
     <div>
       <Head>
@@ -128,41 +137,47 @@ export default function Home({ products }) {
         >
           Nos meilleures ventes
         </chakra.h1>
+
         <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
-          <Link href={`/products/${products.products[0].id}`}>
-            <a>
-              <Product
-                imageSrc={`/Images/shop/${products.products[0].image[0]}`}
-                imageAlt={products.products[0].name}
-                title={products.products[0].name}
-                category={products.products[0].category}
-                price={products.products[0].price}
-              />
-            </a>
-          </Link>
-          <Link href={`/products/${products.products[1].id}`}>
-            <a>
-              <Product
-                imageSrc={`/Images/shop/${products.products[1].image[0]}`}
-                imageAlt={products.products[1].name}
-                title={products.products[1].name}
-                category={products.products[1].category}
-                price={products.products[1].price}
-              />
-            </a>
-          </Link>
-          <Link href={`/products/${products.products[2].id}`}>
-            <a>
-              <Product
-                imageSrc={`/Images/shop/${products.products[2].image[0]}`}
-                imageAlt={products.products[2].name}
-                title={products.products[2].name}
-                category={products.products[2].category}
-                price={products.products[2].price}
-              />
-            </a>
-          </Link>
+          {isLoading ? (<><Spinner /></>
+            
+          ) : <>
+              <Link href={`/products/${products.products[0].id}`}>
+                <a>
+                  <Product
+                    imageSrc={`/Images/shop/${products.products[0].image[0]}`}
+                    imageAlt={products.products[0].name}
+                    title={products.products[0].name}
+                    category={products.products[0].category}
+                    price={products.products[0].price}
+                  />
+                </a>
+              </Link>
+              <Link href={`/products/${products.products[1].id}`}>
+                <a>
+                  <Product
+                    imageSrc={`/Images/shop/${products.products[1].image[0]}`}
+                    imageAlt={products.products[1].name}
+                    title={products.products[1].name}
+                    category={products.products[1].category}
+                    price={products.products[1].price}
+                  />
+                </a>
+              </Link>
+              <Link href={`/products/${products.products[2].id}`}>
+                <a>
+                  <Product
+                    imageSrc={`/Images/shop/${products.products[2].image[0]}`}
+                    imageAlt={products.products[2].name}
+                    title={products.products[2].name}
+                    category={products.products[2].category}
+                    price={products.products[2].price}
+                  />
+                </a>
+              </Link>
+            </> }
         </SimpleGrid>
+
         <Flex py={10} justifyContent={'center'}>
           <Link href={'/products'}>
             <Button

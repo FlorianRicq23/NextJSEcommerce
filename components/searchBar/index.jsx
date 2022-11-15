@@ -26,7 +26,7 @@ export default function SearchBar() {
 
   useEffect(() => {
     async function fetchData() {
-      const products = await fetch('https://kds-js.github.io/shop.json').then(
+      const products = await fetch('https://nextjs-ecommerce-florianricq23.vercel.app/api/products').then(
         (r) => r.json()
       )
       setData(products)
