@@ -46,7 +46,7 @@ export default function SearchBar() {
               value={value}
               onChange={onChange}
             />
-            <Button type="submit" p={0}>
+            <Button bg='none' type="submit" p={0}>
               <Image h='100%' alt={'product image'} src={buttonSearchImage} />
             </Button>
           </Flex>

@@ -38,6 +38,10 @@ function Header() {
   const { colorMode, toggleColorMode } = useColorMode()
   const router = useRouter()
   const currentRoute = router.pathname
+  const buttonToggleImage = useColorModeValue(
+    '/Images/moon-gif.gif',
+    '/Images/sun-icon.png'
+  )
   return (
     <>
       <Box bg={useColorModeValue('gray.100', 'gray.800')} px={{base:1, sm:4}}>
@@ -83,13 +87,16 @@ function Header() {
             </HStack>
           </HStack>
           <Flex gap={{base:3, sm:5}}>
-            <Icon
+            {/* <Icon
              onClick={toggleColorMode}
               cursor={'pointer'}
-              as={colorMode === 'light' ? MoonIcon : SunIcon}
+              as={colorMode === 'light' ? <Image h="100%" alt={'product image'} src={'/Images/cart-gif-black.gif'} /> : SunIcon}
               height={'30px'}
               width={'25px'}
-            />
+            /> */}
+            <Button bg='none' type="submit" onClick={toggleColorMode} p={0} height={'40px'} width={'40px'}>
+              <Image h="90%" alt={'product image'} src={buttonToggleImage} />
+            </Button>
             <CartItemHeader />
           </Flex>
         </Flex>

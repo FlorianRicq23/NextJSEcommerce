@@ -1,4 +1,11 @@
-import { Box, Flex, Icon } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  Image,
+  useColorModeValue,
+} from '@chakra-ui/react'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
@@ -6,18 +13,19 @@ import { useMyShoppingCart } from '../../utils/hooks'
 
 export default function CartItemHeader() {
   const { myShoppingCart } = useMyShoppingCart()
+  const buttonCartImage = useColorModeValue(
+    '/Images/cart-gif-black.gif',
+    '/Images/cart-gif-white.gif'
+  )
 
   return (
     <>
       <Link href={'/cart'}>
         <a>
           <Flex position={'relative'}>
-            <Icon
-              cursor={'pointer'}
-              as={AiOutlineShoppingCart}
-              height={'30px'}
-              width={'30px'}
-            />
+            <Button bg='none' type="submit" p={0} height={'40px'} width={'40px'}>
+              <Image h="100%" alt={'product image'} src={buttonCartImage} />
+            </Button>
             {myShoppingCart != 0 && (
               <Flex
                 position={'absolute'}
