@@ -35,6 +35,7 @@ function ProductDetailPage({ product }) {
   const [price, setPrice] = useState(product.price)
   const [description, setDescription] = useState(product.description)
   const [image, setImage] = useState(product.image)
+  const [imageDisplay, setImageDisplay] = useState(product.image[0])
   const [displayForm, setDisplayForm] = useState(false)
   const colorPrice = useColorModeValue('gray.900', 'gray.400')
   const colorDescription = useColorModeValue('gray.500', 'gray.400')
@@ -82,6 +83,10 @@ function ProductDetailPage({ product }) {
     })
   }
 
+  const strUcFirst = (a) => {
+    return (a + '').charAt(0).toUpperCase() + a.substr(1)
+  }
+
   return (
     <>
       <Head>
@@ -95,16 +100,30 @@ function ProductDetailPage({ product }) {
             spacing={{ base: 8, md: 10 }}
             py={{ base: 18, md: 24 }}
           >
-            <Flex>
+            <Flex direction={'column'}>
               <Image
                 rounded={'md'}
                 alt={'product image'}
-                src={`/Images/shop/${product.image[0]}`}
+                src={`/Images/shop/${imageDisplay}`}
                 fit={'cover'}
                 align={'center'}
                 w={'100%'}
                 h={{ base: '100%', sm: '400px', lg: '500px' }}
               />
+              <SimpleGrid columns={3} spacing={{ base: 2, sm: 5 }} mt={3}>
+                {product.image.map((item, index) => (
+                  <Image
+                    key={index}
+                    rounded={'md'}
+                    alt={'product image'}
+                    src={`/Images/shop/${item}`}
+                    fit={'cover'}
+                    align={'center'}
+                    w={'100%'}
+                    onClick={() => setImageDisplay(item)}
+                  />
+                ))}
+              </SimpleGrid>
             </Flex>
             <Stack spacing={{ base: 6, md: 10 }}>
               <Box as={'header'}>
@@ -184,36 +203,35 @@ function ProductDetailPage({ product }) {
                   </Text>
 
                   <List spacing={2} mb={'4'}>
-                  {displayForm ? (
-                    <FormControl isRequired mb={5}>
-                    <Select
-                      placeholder="Select category"
-                      name="category"
-                      id="category"
-                      onChange={(e) => setCategory(e.target.value)}
-                      defaultValue={category}
-                    >
-                      <option value="homme">Homme</option>
-                      <option value="femme">Femme</option>
-                      <option value="enfant">Enfant</option>
-                    </Select>
-                  </FormControl>
-                  ) : (
-                    <ListItem>
-                      <Text as={'span'} fontWeight={'bold'}>
-                        Category:
-                      </Text>{' '}
-                      {product.category}
-                    </ListItem>
-                  )}
-
+                    {displayForm ? (
+                      <FormControl isRequired mb={5}>
+                        <Select
+                          placeholder="Select category"
+                          name="category"
+                          id="category"
+                          onChange={(e) => setCategory(e.target.value)}
+                          defaultValue={category}
+                        >
+                          <option value="homme">Homme</option>
+                          <option value="femme">Femme</option>
+                          <option value="enfant">Enfant</option>
+                        </Select>
+                      </FormControl>
+                    ) : (
+                      <ListItem>
+                        <Text as={'span'} fontWeight={'bold'}>
+                          Category:
+                        </Text>{' '}
+                        {strUcFirst(product.category)}
+                      </ListItem>
+                    )}
                   </List>
                   {product.id > 9 ? (
-                    <Flex direction={{base:'column', sm:'row'}} gap={2}>
+                    <Flex direction={{ base: 'column', sm: 'row' }} gap={2}>
                       <Button
                         colorScheme={'red'}
                         onClick={() => deleteProduct(product.id)}
-                        fontSize={{base:12 ,lg:14 }}
+                        fontSize={{ base: 12, lg: 14 }}
                         h={8}
                       >
                         Supprimer le produit
@@ -224,7 +242,7 @@ function ProductDetailPage({ product }) {
                           <Button
                             colorScheme={'yellow'}
                             onClick={() => setDisplayForm(!displayForm)}
-                            fontSize={{base:12 ,lg:14 }}
+                            fontSize={{ base: 12, lg: 14 }}
                             h={8}
                           >
                             Annuler la modification
@@ -232,7 +250,7 @@ function ProductDetailPage({ product }) {
                           <Button
                             colorScheme={'green'}
                             onClick={() => editProduct(product.id)}
-                            fontSize={{base:12 ,lg:14 }}
+                            fontSize={{ base: 12, lg: 14 }}
                             h={8}
                           >
                             Valider la modification
@@ -242,7 +260,7 @@ function ProductDetailPage({ product }) {
                         <Button
                           colorScheme={'green'}
                           onClick={() => setDisplayForm(!displayForm)}
-                          fontSize={{base:12 ,lg:14 }}
+                          fontSize={{ base: 12, lg: 14 }}
                           h={8}
                         >
                           Modifier le produit

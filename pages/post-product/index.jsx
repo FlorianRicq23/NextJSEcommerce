@@ -42,7 +42,7 @@ export default function PostProduct() {
     })
   }
   return (
-    <Box mb={10} mt={10} maxW="600px" w={'100%'} mr="auto" ml="auto">
+    <Box p={7} maxW="600px" w={'100%'} mr="auto" ml="auto">
       <form onSubmit={submitProduct}>
         <FormControl isRequired mb={5}>
           <FormLabel>Nom du produit</FormLabel>

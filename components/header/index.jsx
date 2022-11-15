@@ -40,12 +40,12 @@ function Header() {
   const currentRoute = router.pathname
   return (
     <>
-      <Box bg={useColorModeValue('gray.100', 'gray.800')} px={4}>
+      <Box bg={useColorModeValue('gray.100', 'gray.800')} px={{base:1, sm:4}}>
         <Flex
           h={16}
           alignItems={'center'}
           justifyContent={'space-between'}
-          px={4}
+          px={{base:1, sm:4}}
         >
           <IconButton
             size={'md'}
@@ -82,7 +82,7 @@ function Header() {
               />
             </HStack>
           </HStack>
-          <Flex gap={5}>
+          <Flex gap={{base:3, sm:5}}>
             <Icon
              onClick={toggleColorMode}
               cursor={'pointer'}
@@ -93,12 +93,12 @@ function Header() {
             <CartItemHeader />
           </Flex>
         </Flex>
-        <Box p={4}>
+        <Box p={{base:1, sm:4}}>
           <SearchBar />
         </Box>
 
         {isOpen ? (
-          <Box pb={4} display={{ md: 'none' }}>
+          <Box px={{base:4, sm:0}} pb={4} display={{ md: 'none' }}>
             <Stack as={'nav'} spacing={4}>
               <NavLinkComponent
                 title={'Accueil'}
