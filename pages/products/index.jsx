@@ -78,6 +78,7 @@ export default function Products({ products }) {
 
   useEffect(() => {
     router.isReady && setIsLoading(false)
+    router.replace(router.asPath);
   }, [])
 
   return (

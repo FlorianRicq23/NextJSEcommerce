@@ -37,7 +37,6 @@ export default function PostProduct() {
       },
     })
     form.reset();
-    router.replace(router.asPath);
     router.push({
       pathname: '/products',
     })
