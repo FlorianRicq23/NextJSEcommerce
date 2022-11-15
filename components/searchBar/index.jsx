@@ -80,7 +80,7 @@ export default function SearchBar() {
                         <Image
                           rounded={'md'}
                           alt={'product image'}
-                          src={item.image[0]}
+                          src={`/Images/shop/${item.image[0]}`}
                           fit={'cover'}
                           align={'center'}
                           h={16}

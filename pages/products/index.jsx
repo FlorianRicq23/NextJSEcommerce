@@ -78,7 +78,6 @@ export default function Products({ products }) {
 
   useEffect(() => {
     router.isReady && setIsLoading(false)
-    router.replace(router.asPath);
   }, [])
 
   return (
@@ -152,7 +151,6 @@ export default function Products({ products }) {
           ) : (
             <Flex
               direction="column"
-              justifyContent="center"
               maxW={{ xl: '1200px' }}
               m="0 auto"
               minH="100vh"
