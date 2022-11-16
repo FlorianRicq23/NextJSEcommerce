@@ -43,7 +43,7 @@ export default function Products({ products }) {
     setCheckedCategories(updatedList)
   }
 
-  const filterPosts = (data, categories, minPrice, maxPrice) => {
+  const filterPosts = (data, categories, minPrice, maxPrice) => { 
     if (
       !query &&
       !categories.length &&
