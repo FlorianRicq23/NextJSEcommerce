@@ -20,7 +20,7 @@ import { AddIcon, MinusIcon } from '@chakra-ui/icons'
 const QuantitySelect = (props) => {
   return (
     <>
-      <NumberInput defaultValue={props.value} min={1} max={20}>
+      <NumberInput defaultValue={props.value} min={1} max={20} w='50%'>
         <NumberInputField />
         <NumberInputStepper>
           <NumberIncrementStepper onClick={() => props.addQuantity(props.idP)} />
@@ -89,9 +89,10 @@ export const CartItem = (props) => {
           md: 'none',
         }}
       >
-        <Link fontSize="sm" textDecor="underline">
-          Delete
-        </Link>
+        <CloseButton
+          aria-label={`Delete ${name} from cart`}
+          onClick={() => deleteItem(id)}
+        />
         <QuantitySelect
           value={quantity}
           idP={id}
