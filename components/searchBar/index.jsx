@@ -26,7 +26,8 @@ export default function SearchBar() {
 
   useEffect(() => {
     async function fetchData() {
-      const products = await fetch('https://nextjs-ecommerce-florianricq23.vercel.app/api/products').then(
+      //const products = await fetch('https://nextjs-ecommerce-florianricq23.vercel.app/api/products').then(
+      const products = await fetch('http://localhost:3000/api/products').then(
         (r) => r.json()
       )
       setData(products)
@@ -40,7 +41,8 @@ export default function SearchBar() {
         <form onSubmit={handleSubmit}>
           <Flex>
             <Input
-              bg={'white'}
+              bg='white'
+              color='black'
               placeholder="Rechercher un produit"
               type="text"
               value={value}
