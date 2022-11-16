@@ -43,7 +43,7 @@ export default function Products({ products }) {
     setCheckedCategories(updatedList)
   }
 
-  const filterPosts = (data, categories, minPrice, maxPrice) => { 
+  const filterPosts = (data, categories, minPrice, maxPrice) => {
     if (
       !query &&
       !categories.length &&
@@ -64,7 +64,7 @@ export default function Products({ products }) {
       })
       .filter((product) => {
         const postName = product.name.toLowerCase()
-        return postName.includes(query)
+        return postName.includes(query.toLowerCase())
       })
   }
   const filteredPosts = filterPosts(
@@ -86,7 +86,7 @@ export default function Products({ products }) {
           flexDirection="column"
           w={'200px'}
           p={15}
-          //display={{ base: 'none', md: 'block' }}
+          display={{ base: 'none', md: 'block' }}
         >
           <Box>
             <Heading fontSize={18} borderBottom={colorHeading}>
@@ -150,8 +150,7 @@ export default function Products({ products }) {
               <Grid
                 w="full"
                 gridGap="5"
-                //gridTemplateColumns={{base: "repeat( auto-fit, minmax(200px, 1fr) )", md: "repeat( auto-fit, minmax(300px, 1fr) )"}}
-                gridTemplateColumns="repeat( auto-fit, minmax(300px, 1fr) )"
+                gridTemplateColumns={{base: "repeat( auto-fit, minmax(200px, 1fr) )", md: "repeat( auto-fit, minmax(300px, 1fr) )"}}
               >
                 {filteredPosts.map((product) => (
                   <Box key={product.id}>
