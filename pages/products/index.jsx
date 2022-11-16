@@ -23,7 +23,7 @@ export default function Products({ products }) {
   const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
 
-  const query = router.query.value ? router.query.value : ''
+  //const query = router.query.value ? router.query.value : ''
 
   const [searchQuery, setSearchQuery] = useState(query)
   const [checkedCategories, setCheckedCategories] = useState([])
@@ -76,9 +76,9 @@ export default function Products({ products }) {
     valMaxSlide
   )
 
-  useEffect(() => {
+  /* useEffect(() => {
     router.isReady && setIsLoading(false)
-  }, [])
+  }, []) */
 
   return (
     <div>
