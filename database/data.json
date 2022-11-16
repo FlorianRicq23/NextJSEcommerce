@@ -61,10 +61,10 @@
             "description": "Fabriqué à la main avec un style saisonnier à l'esprit, il est idéal pour une tenue formelle ou décontractée quelle que soit l'occasion et est un incontournable idéal pour toute garde-robe.",
             "image": ["long_sleeve_red_01.jpeg", "long_sleeve_red_03.jpeg", "long_sleeve_red_05.jpeg"],
             "variantes": [
-                { "couleur": "Rouge", "tailles": ["XS", "S", "M", "L", "XL"], "image": ["long_sleeve_red_01.jpeg", "long_sleeve_red_03.jpeg", "long_sleeve_red_05.jpeg"], "price": 45 },
-                { "couleur": "Vert", "tailles": ["S", "L", "XL"], "image": ["long_sleeve_green_00.jpeg", "long_sleeve_green_02.jpeg", "long_sleeve_green_05.jpeg"], "price": 45 },
-                { "couleur": "Noir", "tailles": ["S", "M"], "image": ["long_sleeve_rose_01", "long_sleeve_rose_03.jpeg", "long_sleeve_rose_05.jpeg"], "price": 45 },
-                { "couleur": "Rose", "tailles": ["XS", "S", "M", "L", "XL"], "image": ["long_sleeve_dark_01.jpeg", "long_sleeve_dark_03.jpeg", "long_sleeve_dark_05.jpeg"], "price": 45 }
+                { "id": 0, "couleur": "Rouge", "tailles": ["XS", "S", "M", "L", "XL"], "image": ["long_sleeve_red_01.jpeg", "long_sleeve_red_03.jpeg", "long_sleeve_red_05.jpeg"], "price": 45 },
+                { "id": 1, "couleur": "Vert", "tailles": ["S", "L", "XL"], "image": ["long_sleeve_green_00.jpeg", "long_sleeve_green_02.jpeg", "long_sleeve_green_05.jpeg"], "price": 45 },
+                { "id": 2, "couleur": "Noir", "tailles": ["S", "M"], "image": ["long_sleeve_rose_01", "long_sleeve_rose_03.jpeg", "long_sleeve_rose_05.jpeg"], "price": 45 },
+                { "id": 3, "couleur": "Rose", "tailles": ["XS", "S", "M", "L", "XL"], "image": ["long_sleeve_dark_01.jpeg", "long_sleeve_dark_03.jpeg", "long_sleeve_dark_05.jpeg"], "price": 45 }
             ]
         },
         {
