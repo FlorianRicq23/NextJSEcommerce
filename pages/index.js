@@ -32,7 +32,8 @@ export default function Home({ products }) {
         <title>NextJS E-Shop</title>
         <meta name="description" content="My NextJS E-Shop" />
         <link rel="icon" href="/favicon.ico" />
-      </Head>
+      </Head>        
+      <Flex bg='teal.400' h={33} alignItems={'center'} justifyContent={'center'}><Text>Vente flash débloquée ⚡ 25% de réduction avec le code &quot;NEXT25&quot;</Text></Flex>
       <Container maxW={'7xl'}>
         <Stack
           align={'center'}

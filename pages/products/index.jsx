@@ -151,14 +151,14 @@ export default function Products({ products }) {
           ) : (
             <Flex
               direction="column"
-              maxW={{ xl: '1200px' }}
+              maxW={{ xl: '2000px' }}
               m="0 auto"
               minH="100vh"
             >
               <Grid
                 w="full"
                 gridGap="5"
-                gridTemplateColumns="repeat( auto-fit, minmax(300px, 1fr) )"
+                gridTemplateColumns={{base: "repeat( auto-fit, minmax(200px, 1fr) )", md: "repeat( auto-fit, minmax(300px, 1fr) )"}}
               >
                 {filteredPosts.map((product) => (
                   <Box key={product.id}>
