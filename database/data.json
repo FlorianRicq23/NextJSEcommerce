@@ -88,14 +88,14 @@
         {
             "id": 9,
             "quantity": 1,
-            "name": "Seamless Long Sleeve Crop",
+            "name": "Polka Dot Dress",
             "category": "femme",
-            "price": 45,
+            "price": 50,
             "description": "Fabriqué à la main avec un style saisonnier à l'esprit, il est idéal pour une tenue formelle ou décontractée quelle que soit l'occasion et est un incontournable idéal pour toute garde-robe.",
             "image": [
-                "long_sleeve_green_00.jpeg",
-                "long_sleeve_green_02.jpeg",
-                "long_sleeve_green_05.jpeg"
+                "pokadot_01.jpeg",
+                "pokadot_02.jpeg",
+                "pokadot_03.jpeg"
             ]
         },
         {

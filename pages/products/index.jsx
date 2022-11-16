@@ -21,7 +21,6 @@ import { useRouter } from 'next/router'
 
 export default function Products({ products }) {
   const router = useRouter()
-
   const query = router.query.value ? router.query.value : ''
 
   const [searchQuery, setSearchQuery] = useState(query)
@@ -87,7 +86,7 @@ export default function Products({ products }) {
           flexDirection="column"
           w={'200px'}
           p={15}
-          display={{ base: 'none', md: 'block' }}
+          //display={{ base: 'none', md: 'block' }}
         >
           <Box>
             <Heading fontSize={18} borderBottom={colorHeading}>
@@ -151,7 +150,8 @@ export default function Products({ products }) {
               <Grid
                 w="full"
                 gridGap="5"
-                gridTemplateColumns={{base: "repeat( auto-fit, minmax(200px, 1fr) )", md: "repeat( auto-fit, minmax(300px, 1fr) )"}}
+                //gridTemplateColumns={{base: "repeat( auto-fit, minmax(200px, 1fr) )", md: "repeat( auto-fit, minmax(300px, 1fr) )"}}
+                gridTemplateColumns="repeat( auto-fit, minmax(300px, 1fr) )"
               >
                 {filteredPosts.map((product) => (
                   <Box key={product.id}>
