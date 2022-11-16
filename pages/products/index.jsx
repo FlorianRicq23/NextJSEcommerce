@@ -20,10 +20,9 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 
 export default function Products({ products }) {
-  const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
 
-  //const query = router.query.value ? router.query.value : ''
+  const query = router.query.value ? router.query.value : ''
 
   const [searchQuery, setSearchQuery] = useState(query)
   const [checkedCategories, setCheckedCategories] = useState([])
@@ -76,9 +75,6 @@ export default function Products({ products }) {
     valMaxSlide
   )
 
-  /* useEffect(() => {
-    router.isReady && setIsLoading(false)
-  }, []) */
 
   return (
     <div>
@@ -146,10 +142,7 @@ export default function Products({ products }) {
           </Box>
         </Flex>
         <Box w="100%">
-          {isLoading ? (
-            <><Spinner /></>
-          ) : (
-            <Flex
+        <Flex
               direction="column"
               maxW={{ xl: '2000px' }}
               m="0 auto"
@@ -177,7 +170,6 @@ export default function Products({ products }) {
                 ))}
               </Grid>
             </Flex>
-          )}
         </Box>
       </Flex>
     </div>
