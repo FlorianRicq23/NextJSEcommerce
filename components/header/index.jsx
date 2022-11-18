@@ -28,7 +28,7 @@ const NavLinkComponent = ({
 }) => (
   <Box onClick={isOpen ? onClose : onOpen}>
     <Link href={link}>
-      <a style={current === link ? { fontWeight: 'bold' } : null}>{title}</a>
+      <a className="hover-underline-animation" style={current === link ? { fontWeight: 'bold' } : null}>{title}</a>
     </Link>
   </Box>
 )

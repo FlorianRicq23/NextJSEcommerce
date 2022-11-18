@@ -23,6 +23,7 @@ import {
 import { MdLocalShipping } from 'react-icons/md'
 import { useMyShoppingCart } from '../../utils/hooks'
 import { useState } from 'react'
+import VarianteItem from '../../components/VarianteItem'
 
 function ProductDetailPage({ product }) {
   const { myShoppingCart, setMyShoppingCart } = useMyShoppingCart()
@@ -36,6 +37,7 @@ function ProductDetailPage({ product }) {
   const [description, setDescription] = useState(product.description)
   const [image, setImage] = useState(product.image)
   const [imageDisplay, setImageDisplay] = useState(product.image[0])
+  const [indexVariante, setIndexVariante] = useState(0)
   const [displayForm, setDisplayForm] = useState(false)
   const colorPrice = useColorModeValue('gray.900', 'gray.400')
   const colorDescription = useColorModeValue('gray.500', 'gray.400')
@@ -91,7 +93,7 @@ function ProductDetailPage({ product }) {
     <>
       <Head>
         <title>{title}</title>
-        <meta name="description" content="test content" />
+        <meta name="description" content={product.description} />
       </Head>
       <Box>
         <Container maxW={'7xl'}>
@@ -226,6 +228,15 @@ function ProductDetailPage({ product }) {
                       </ListItem>
                     )}
                   </List>
+
+                  {product.variantes ? (
+                    <Flex gap={{ base: 2, sm: 5 }} mt={3}>
+                      {product.variantes.map((item, index) => (
+                        <VarianteItem key={index} item={item} setImageDisplay={setImageDisplay} />
+                      ))}
+                    </Flex>
+                  ) : null}
+
                   {product.id > 9 ? (
                     <Flex direction={{ base: 'column', sm: 'row' }} gap={2}>
                       <Button
@@ -307,9 +318,9 @@ function ProductDetailPage({ product }) {
 
 export async function getStaticProps({ params }) {
   const id = params.id
-  const product = await fetch(`https://nextjs-ecommerce-florianricq23.vercel.app/api/products/${id}`).then(
-    (r) => r.json()
-  )
+  const product = await fetch(
+    `https://nextjs-ecommerce-florianricq23.vercel.app/api/products/${id}`
+  ).then((r) => r.json())
 
   return {
     props: {
@@ -318,9 +329,9 @@ export async function getStaticProps({ params }) {
   }
 }
 export async function getStaticPaths() {
-  const products = await fetch('https://nextjs-ecommerce-florianricq23.vercel.app/api/products').then((r) =>
-    r.json()
-  )
+  const products = await fetch(
+    'https://nextjs-ecommerce-florianricq23.vercel.app/api/products'
+  ).then((r) => r.json())
   return {
     paths: products.products.map((product) => ({
       params: { id: product.id.toString() },
