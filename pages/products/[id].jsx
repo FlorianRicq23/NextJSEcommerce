@@ -263,7 +263,7 @@ function ProductDetailPage({ product }) {
                       </Flex>
 
                       <Flex gap={{ base: 2, sm: 5 }} mt={3}>
-                        {product.variantes[indexVariante].sizes.map(
+                        {product?.variantes[indexVariante]?.sizes?.map(
                           (item, index) => (
                             <Box key={index}>{item}</Box>
                           )
