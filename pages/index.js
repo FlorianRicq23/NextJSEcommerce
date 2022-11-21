@@ -216,7 +216,7 @@ export const Blob = (IconProps) => {
 
 export async function getStaticProps() {
   const products = await fetch(
-    'http://localhost:3000/api/products'
+    'https://nextjs-ecommerce-florianricq23.vercel.app/api/products'
   ).then((r) => r.json())
   return {
     props: {
