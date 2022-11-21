@@ -30,8 +30,8 @@ export function MyShoppingCartProvider({ children }) {
       localStorage.setItem("cart", JSON.stringify(myShoppingCart));
     }
     let price = 0;
-    myShoppingCart.map((product) => {
-      price += (product.quantity*product.price)
+    myShoppingCart.map((item) => {
+      price += (item.quantity*item.product.price)
     })
     setTotalPrice(price)
   }, [myShoppingCart]);

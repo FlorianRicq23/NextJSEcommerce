@@ -1,8 +1,7 @@
 import { Image, Box, Stack, Heading } from '@chakra-ui/react'
 
-const VarianteItem = ({ item, setImageDisplay }) => (
+const VarianteItem = ({ item, setImageStack, setImageDisplay, setIndexVariante }) => (
   <Box>
-    
     <Image
       rounded={'md'}
       alt={'product image'}
@@ -15,7 +14,7 @@ const VarianteItem = ({ item, setImageDisplay }) => (
         border: 'black solid 1px',
         cursor: 'pointer',
       }}
-      onClick={() => setImageDisplay(item.image[0])}
+      onClick={() => {setImageStack(item.image), setImageDisplay(item.image[0]), setIndexVariante(item.id)} }
     />
   </Box>
 )

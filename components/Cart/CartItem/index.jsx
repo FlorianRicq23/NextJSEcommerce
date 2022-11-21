@@ -1,26 +1,20 @@
 import {
   CloseButton,
   Flex,
-  Link,
   NumberDecrementStepper,
   NumberIncrementStepper,
   NumberInput,
   NumberInputField,
-  NumberInputStepper,
-  Select,
-  Stack,
-  Text,
-  useColorModeValue,
+  NumberInputStepper
 } from '@chakra-ui/react'
 import * as React from 'react'
 import { PriceTag } from '../PriceTag'
 import { CartProductMeta } from '../CartProductMeta'
-import { AddIcon, MinusIcon } from '@chakra-ui/icons'
 
 const QuantitySelect = (props) => {
   return (
     <>
-      <NumberInput defaultValue={props.value} min={1} max={20} w='50%'>
+      <NumberInput value={props.value} min={1} max={20} w='50%'>
         <NumberInputField />
         <NumberInputStepper>
           <NumberIncrementStepper onClick={() => props.addQuantity(props.idP)} />
@@ -33,12 +27,15 @@ const QuantitySelect = (props) => {
 
 export const CartItem = (props) => {
   const {
-    isGiftWrapping,id,
+    isGiftWrapping,
+    id,
     name,
-    quantity,description,
-    image,
-    currency,
-    price,addQuantity, reduceQuantity,deleteItem,
+    quantityItem,
+    description,
+    image,indexItem,
+    currency,variante,
+    price,
+    addQuantity, reduceQuantity,deleteItem,
   } = props
   return (
     <Flex
@@ -51,8 +48,9 @@ export const CartItem = (props) => {
     >
       <CartProductMeta
         name={name}
+        variante={variante}
         description={description}
-        image={`/Images/shop/${image[0]}`}
+        image={variante ? `/Images/shop/${variante.image[0]}` : `/Images/shop/${image[0]}`}
         isGiftWrapping={isGiftWrapping}
       />
 
@@ -66,7 +64,7 @@ export const CartItem = (props) => {
         }}
       >
         <QuantitySelect
-          value={quantity}
+          value={quantityItem}
           idP={id}
           addQuantity={addQuantity}
           reduceQuantity={reduceQuantity}
@@ -74,7 +72,7 @@ export const CartItem = (props) => {
         <PriceTag price={price} currency={currency} />
         <CloseButton
           aria-label={`Delete ${name} from cart`}
-          onClick={() => deleteItem(id)}
+          onClick={() => deleteItem(indexItem)}
         />
       </Flex>
 
@@ -91,10 +89,10 @@ export const CartItem = (props) => {
       >
         <CloseButton
           aria-label={`Delete ${name} from cart`}
-          onClick={() => deleteItem(id)}
+          onClick={() => deleteItem(indexItem)}
         />
         <QuantitySelect
-          value={quantity}
+          value={quantityItem}
           idP={id}
           addQuantity={addQuantity}
           reduceQuantity={reduceQuantity}

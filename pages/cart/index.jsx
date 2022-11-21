@@ -1,15 +1,13 @@
-import { AddIcon, MinusIcon } from '@chakra-ui/icons'
 import {
   Box,
   Flex,
   Heading,
   HStack,
   Stack,
-  Text,
   useColorModeValue as mode,
 } from '@chakra-ui/react'
 import Head from 'next/head'
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useMyShoppingCart } from '../../utils/hooks'
 import * as React from 'react'
 import { CartItem } from '../../components/Cart/CartItem'
@@ -18,11 +16,11 @@ import Link from 'next/link'
 
 export default function Cart() {
   const { myShoppingCart, setMyShoppingCart } = useMyShoppingCart()
-
+  console.log(myShoppingCart)
   const deleteItem = (idP) => {
     setMyShoppingCart((myShoppingCart) => {
       let newList = myShoppingCart.filter(
-        (shoppingItem) => shoppingItem.id !== idP
+        (shoppingItem, index) => index !== idP
       )
       return newList
     })
@@ -31,7 +29,7 @@ export default function Cart() {
   const addQuantity = (idP) => {
     setMyShoppingCart((myShoppingCart) => {
       return myShoppingCart.map((item) => {
-        if (item.id == idP) {
+        if (item.product.id == idP) {
           return { ...item, quantity: item.quantity + 1 }
         } else return item
       })
@@ -41,7 +39,7 @@ export default function Cart() {
   const reduceQuantity = (idP) => {
     setMyShoppingCart((myShoppingCart) => {
       return myShoppingCart.map((item) => {
-        if (item.id == idP && item.quantity > 1) {
+        if (item.product.id == idP && item.quantity > 1) {
           return { ...item, quantity: item.quantity - 1 }
         } else return item
       })
@@ -102,13 +100,21 @@ export default function Cart() {
             </Heading>
 
             <Stack spacing="6">
-              {myShoppingCart.map((item) => (
+              {myShoppingCart.map((item, index) => (
                 <CartItem
-                  key={item.id}
+                  key={index}
                   addQuantity={addQuantity}
                   reduceQuantity={reduceQuantity}
                   deleteItem={deleteItem}
-                  {...item}
+                  indexItem={index}
+                  quantityItem={item.quantity}
+                  id={item.product.id}
+                  name={item.product.name}
+                  description={item.product.description}
+                  image={item.product.image}
+                  currency={item.product.currency}
+                  price={item.product.price}
+                  variante={item.variante}
                 />
               ))}
             </Stack>

@@ -36,7 +36,8 @@ function ProductDetailPage({ product }) {
   const [price, setPrice] = useState(product.price)
   const [description, setDescription] = useState(product.description)
   const [image, setImage] = useState(product.image)
-  const [imageDisplay, setImageDisplay] = useState(product.image[0])
+  const [imageStack, setImageStack] = useState(product.image)
+  const [imageDisplay, setImageDisplay] = useState(imageStack[0])
   const [indexVariante, setIndexVariante] = useState(0)
   const [displayForm, setDisplayForm] = useState(false)
   const colorPrice = useColorModeValue('gray.900', 'gray.400')
@@ -75,13 +76,31 @@ function ProductDetailPage({ product }) {
   const addToCart = () => {
     setMyShoppingCart((myShoppingCart) => {
       let isAlreadyInCart = false
+
       for (let i = 0; i < myShoppingCart.length; i++) {
-        if (myShoppingCart[i].id == product.id) {
+        if (myShoppingCart[i].variante) {
+          if (myShoppingCart[i].product.id == product.id && myShoppingCart[i].variante.id == indexVariante) {
+            isAlreadyInCart = true
+          }
+        } else if (myShoppingCart[i].product.id == product.id) {
           isAlreadyInCart = true
         }
       }
+
       if (isAlreadyInCart) return myShoppingCart
-      else return [product, ...myShoppingCart]
+      else {
+        const varianteProduct = product.variantes
+          ? product.variantes[indexVariante]
+          : null
+        return [
+          {
+            product: product,
+            variante: varianteProduct,
+            quantity: product.quantity,
+          },
+          ...myShoppingCart,
+        ]
+      }
     })
   }
 
@@ -113,7 +132,7 @@ function ProductDetailPage({ product }) {
                 h={{ base: '100%', sm: '400px', lg: '500px' }}
               />
               <SimpleGrid columns={3} spacing={{ base: 2, sm: 5 }} mt={3}>
-                {product.image.map((item, index) => (
+                {imageStack.map((item, index) => (
                   <Image
                     key={index}
                     rounded={'md'}
@@ -230,11 +249,27 @@ function ProductDetailPage({ product }) {
                   </List>
 
                   {product.variantes ? (
-                    <Flex gap={{ base: 2, sm: 5 }} mt={3}>
-                      {product.variantes.map((item, index) => (
-                        <VarianteItem key={index} item={item} setImageDisplay={setImageDisplay} />
-                      ))}
-                    </Flex>
+                    <>
+                      <Flex gap={{ base: 2, sm: 5 }} mt={3}>
+                        {product.variantes.map((item, index) => (
+                          <VarianteItem
+                            key={index}
+                            item={item}
+                            setImageStack={setImageStack}
+                            setImageDisplay={setImageDisplay}
+                            setIndexVariante={setIndexVariante}
+                          />
+                        ))}
+                      </Flex>
+
+                      <Flex gap={{ base: 2, sm: 5 }} mt={3}>
+                        {product.variantes[indexVariante].sizes.map(
+                          (item, index) => (
+                            <Box key={index}>{item}</Box>
+                          )
+                        )}
+                      </Flex>
+                    </>
                   ) : null}
 
                   {product.id > 9 ? (
@@ -318,9 +353,9 @@ function ProductDetailPage({ product }) {
 
 export async function getStaticProps({ params }) {
   const id = params.id
-  const product = await fetch(
-    `https://nextjs-ecommerce-florianricq23.vercel.app/api/products/${id}`
-  ).then((r) => r.json())
+  const product = await fetch(`http://localhost:3000/api/products/${id}`).then(
+    (r) => r.json()
+  )
 
   return {
     props: {
@@ -329,9 +364,9 @@ export async function getStaticProps({ params }) {
   }
 }
 export async function getStaticPaths() {
-  const products = await fetch(
-    'https://nextjs-ecommerce-florianricq23.vercel.app/api/products'
-  ).then((r) => r.json())
+  const products = await fetch('http://localhost:3000/api/products').then((r) =>
+    r.json()
+  )
   return {
     paths: products.products.map((product) => ({
       params: { id: product.id.toString() },
