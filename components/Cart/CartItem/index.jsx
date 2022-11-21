@@ -37,7 +37,6 @@ export const CartItem = (props) => {
     price,
     addQuantity, reduceQuantity,deleteItem,
   } = props
-  console.log(indexItem)
   return (
     <Flex
       direction={{
