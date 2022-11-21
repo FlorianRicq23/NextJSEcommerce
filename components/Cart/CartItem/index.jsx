@@ -37,6 +37,7 @@ export const CartItem = (props) => {
     price,
     addQuantity, reduceQuantity,deleteItem,
   } = props
+  console.log(indexItem)
   return (
     <Flex
       direction={{
@@ -65,7 +66,7 @@ export const CartItem = (props) => {
       >
         <QuantitySelect
           value={quantityItem}
-          idP={id}
+          idP={indexItem}
           addQuantity={addQuantity}
           reduceQuantity={reduceQuantity}
         />
@@ -93,7 +94,7 @@ export const CartItem = (props) => {
         />
         <QuantitySelect
           value={quantityItem}
-          idP={id}
+          idP={indexItem}
           addQuantity={addQuantity}
           reduceQuantity={reduceQuantity}
         />

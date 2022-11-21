@@ -16,7 +16,6 @@ import Link from 'next/link'
 
 export default function Cart() {
   const { myShoppingCart, setMyShoppingCart } = useMyShoppingCart()
-  console.log(myShoppingCart)
   const deleteItem = (idP) => {
     setMyShoppingCart((myShoppingCart) => {
       let newList = myShoppingCart.filter(
@@ -28,8 +27,8 @@ export default function Cart() {
 
   const addQuantity = (idP) => {
     setMyShoppingCart((myShoppingCart) => {
-      return myShoppingCart.map((item) => {
-        if (item.product.id == idP) {
+      return myShoppingCart.map((item, index) => {
+        if (index == idP) {
           return { ...item, quantity: item.quantity + 1 }
         } else return item
       })
@@ -38,8 +37,9 @@ export default function Cart() {
 
   const reduceQuantity = (idP) => {
     setMyShoppingCart((myShoppingCart) => {
-      return myShoppingCart.map((item) => {
-        if (item.product.id == idP && item.quantity > 1) {
+      
+      return myShoppingCart.map((item, index) => {
+        if (index == idP && item.quantity > 1) {
           return { ...item, quantity: item.quantity - 1 }
         } else return item
       })
