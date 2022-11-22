@@ -12,6 +12,7 @@ import {
   Checkbox,
   useColorModeValue,
   Spinner,
+  Text,
 } from '@chakra-ui/react'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -152,7 +153,7 @@ export default function Products({ products }) {
                 gridGap="5"
                 gridTemplateColumns={{base: "repeat( auto-fit, minmax(200px, 1fr) )", md: "repeat( auto-fit, minmax(300px, 1fr) )"}}
               >
-                {filteredPosts.map((product) => (
+                {filteredPosts.length!==0 ? filteredPosts.map((product) => (
                   <Box key={product.id}>
                     <Link href={`/products/${product.id}`}>
                       <a>
@@ -166,7 +167,7 @@ export default function Products({ products }) {
                       </a>
                     </Link>
                   </Box>
-                ))}
+                )) : <Text>Aucun produit correspondant</Text>}
               </Grid>
             </Flex>
         </Box>
