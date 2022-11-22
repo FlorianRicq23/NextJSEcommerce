@@ -16,10 +16,14 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 export default function TestingApi({ products }) {
+  let title = `NextJS E-Shop -  ${product.name}`
+  const router = useRouter()
+
   const deleteProduct = async (productId) => {
     const response = await fetch(`/api/products/${productId}`, {
       method: 'DELETE',
     })
+    window.location.reload(false);
   }
   return (
     <Box>
