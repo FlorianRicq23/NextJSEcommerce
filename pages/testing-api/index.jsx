@@ -16,14 +16,15 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 export default function TestingApi({ products }) {
-  let title = `NextJS E-Shop -  ${product.name}`
+  let title = `NextJS E-Shop - Testing API`
   const router = useRouter()
+  const [data, setData] = useState(products)
 
   const deleteProduct = async (productId) => {
     const response = await fetch(`/api/products/${productId}`, {
       method: 'DELETE',
     })
-    window.location.reload(false);
+    router.replace(router.asPath);
   }
   return (
     <Box>
@@ -78,7 +79,7 @@ export default function TestingApi({ products }) {
 
 export async function getServerSideProps() {
   const products = await fetch(
-    'https://nextjs-ecommerce-florianricq23.vercel.app/api/products'
+    'http://localhost:3000/api/products'
   ).then((r) => r.json())
   return {
     props: {
