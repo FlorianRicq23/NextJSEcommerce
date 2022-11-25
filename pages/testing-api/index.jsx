@@ -44,9 +44,9 @@ export default function TestingApi() {
           </Heading>
 
           <Stack divider={<StackDivider />} spacing="4">
-            {data.products.map((product) => (
+            {data ? data.products.map((product) => (
               <TestingApiItem key={product.id} product={product} />
-            ))}
+            )) : null }
           </Stack>
         </Box>
       </Flex>
