@@ -80,8 +80,8 @@ function Header() {
                 current={currentRoute}
               />
               <NavLinkComponent
-                title={'Créer un produit'}
-                link={'/post-product'}
+                title={'Gestion des produits'}
+                link={'/testing-api'}
                 current={currentRoute}
               />
             </HStack>
@@ -124,8 +124,8 @@ function Header() {
                 onOpen={onOpen}
               />
               <NavLinkComponent
-                title={'Créer un produit'}
-                link={'/post-product'}
+                title={'Gestion des produits'}
+                link={'/testing-api'}
                 current={currentRoute}
                 isOpen={isOpen}
                 onClose={onClose}

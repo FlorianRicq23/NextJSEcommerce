@@ -291,7 +291,7 @@ function ProductDetailPage({ product }) {
                             fontSize={{ base: 12, lg: 14 }}
                             h={8}
                           >
-                            Annuler la modification
+                            Annuler
                           </Button>
                           <Button
                             colorScheme={'green'}
@@ -299,7 +299,7 @@ function ProductDetailPage({ product }) {
                             fontSize={{ base: 12, lg: 14 }}
                             h={8}
                           >
-                            Valider la modification
+                            Valider
                           </Button>
                         </>
                       ) : (
@@ -309,7 +309,7 @@ function ProductDetailPage({ product }) {
                           fontSize={{ base: 12, lg: 14 }}
                           h={8}
                         >
-                          Modifier le produit
+                          Modifier
                         </Button>
                       )}
                     </Flex>

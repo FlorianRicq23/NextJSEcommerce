@@ -9,7 +9,7 @@ import {
   Select,
 } from '@chakra-ui/react'
 
-export default function PostProduct() {
+export default function TestingApiCreate() {
   const router = useRouter()
 
   const submitProduct = async (e) => {
@@ -37,12 +37,11 @@ export default function PostProduct() {
       },
     })
     form.reset();
-    router.push({
-      pathname: '/products',
-    })
+    router.replace(router.asPath);
+
   }
   return (
-    <Box p={7} maxW="600px" w={'100%'} mr="auto" ml="auto">
+    <Box p={7} mr="auto" ml="auto">
       <form onSubmit={submitProduct}>
         <FormControl isRequired mb={5}>
           <FormLabel>Nom du produit</FormLabel>

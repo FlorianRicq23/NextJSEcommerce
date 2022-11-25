@@ -2,14 +2,24 @@ import { Box, Button, Flex, Icon, Image, Input, useColorModeValue } from '@chakr
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import axios from 'axios'
+import { useQuery } from 'react-query'
 
 export default function SearchBar() {
-  const [value, setValue] = useState('')
-  const [data, setData] = useState()
 
+  const [value, setValue] = useState('')
   const buttonSearchImage = useColorModeValue('/Images/search-gif-black.gif', '/Images/search-gif-white.gif')
 
   const router = useRouter()
+
+  async function fetchAllProducts() {
+    //const { data } = await axios.get('http://localhost:3000/api/products')
+    const { data } = await axios.get('https://nextjs-ecommerce-florianricq23.vercel.app/api/products')
+    return data
+  }
+  const { status, error, data } = useQuery(['listeProducts'], () =>
+    fetchAllProducts()
+  )
 
   const onChange = (event) => {
     setValue(event.target.value)
@@ -24,16 +34,16 @@ export default function SearchBar() {
     setValue('')
   }
 
-  useEffect(() => {
+/*   useEffect(() => {
     async function fetchData() {
-      const products = await fetch('https://nextjs-ecommerce-florianricq23.vercel.app/api/products').then(
-      //const products = await fetch('http://localhost:3000/api/products').then(
+      //const products = await fetch('https://nextjs-ecommerce-florianricq23.vercel.app/api/products').then(
+      const products = await fetch('http://localhost:3000/api/products').then(
         (r) => r.json()
       )
       setData(products)
     }
     fetchData()
-  }, [])
+  }, []) */
 
   return (
     <>
