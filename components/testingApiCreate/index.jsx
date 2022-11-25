@@ -10,7 +10,6 @@ import {
 } from '@chakra-ui/react'
 
 export default function TestingApiCreate() {
-  const router = useRouter()
 
   const submitProduct = async (e) => {
     e.preventDefault()
@@ -37,8 +36,6 @@ export default function TestingApiCreate() {
       },
     })
     form.reset();
-    router.replace(router.asPath);
-
   }
   return (
     <Box p={7} mr="auto" ml="auto">

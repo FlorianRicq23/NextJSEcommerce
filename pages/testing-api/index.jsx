@@ -1,24 +1,26 @@
 import {
-  Avatar,
   Box,
-  Button,
   Flex,
   Heading,
-  HStack,
-  Image,
-  Input,
   Stack,
-  StackDivider,
-  Text,
-  useColorMode,
+  StackDivider
 } from '@chakra-ui/react'
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
 import TestingApiItem from '../../components/testingApiItem'
 import TestingApiCreate from '../../components/testingApiCreate'
+import axios from 'axios'
+import { useQuery } from 'react-query'
 
-export default function TestingApi({ products }) {
+export default function TestingApi() {
   let title = `NextJS E-Shop - Testing API`
+
+  async function fetchAllProducts() {
+    //const { data } = await axios.get('http://localhost:3000/api/products')
+    const { data } = await axios.get('https://nextjs-ecommerce-florianricq23.vercel.app/api/products')
+    return data
+  }
+  const { status, error, data } = useQuery(['listeProducts'], () =>
+    fetchAllProducts()
+  )
 
   return (
     <Box>
@@ -42,7 +44,7 @@ export default function TestingApi({ products }) {
           </Heading>
 
           <Stack divider={<StackDivider />} spacing="4">
-            {products.products.map((product) => (
+            {data.products.map((product) => (
               <TestingApiItem key={product.id} product={product} />
             ))}
           </Stack>
@@ -52,7 +54,7 @@ export default function TestingApi({ products }) {
   )
 }
 
-export async function getServerSideProps() {
+/* export async function getServerSideProps() {
   const products = await fetch(
     'https://nextjs-ecommerce-florianricq23.vercel.app/api/products'
     //'http://localhost:3000/api/products'
@@ -62,4 +64,4 @@ export async function getServerSideProps() {
       products,
     },
   }
-}
+} */
