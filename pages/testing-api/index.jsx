@@ -1,14 +1,8 @@
-import {
-  Box,
-  Flex,
-  Heading,
-  Stack,
-  StackDivider
-} from '@chakra-ui/react'
+import { Box, Flex, Heading, Stack, StackDivider } from '@chakra-ui/react'
 import TestingApiItem from '../../components/testingApiItem'
 import TestingApiCreate from '../../components/testingApiCreate'
 import axios from 'axios'
-import { useQuery } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 
 export default function TestingApi() {
   let title = `NextJS E-Shop - Testing API`
@@ -33,9 +27,7 @@ export default function TestingApi() {
         ml="auto"
       >
         <Box>
-          <Heading as="h2">
-            Création d&apos;un produit
-          </Heading>
+          <Heading as="h2">Création d&apos;un produit</Heading>
           <TestingApiCreate />
         </Box>
         <Box>
@@ -44,9 +36,11 @@ export default function TestingApi() {
           </Heading>
 
           <Stack divider={<StackDivider />} spacing="4">
-            {data ? data.products.map((product) => (
-              <TestingApiItem key={product.id} product={product} />
-            )) : null }
+            {data
+              ? data.products.map((product) => (
+                  <TestingApiItem key={product.id} product={product} />
+                ))
+              : null}
           </Stack>
         </Box>
       </Flex>
