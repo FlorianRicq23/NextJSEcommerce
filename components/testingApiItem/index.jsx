@@ -7,6 +7,7 @@ import {
   Heading,
   HStack,
   Input,
+  Stack,
   Text,
   Textarea,
 } from '@chakra-ui/react'
@@ -71,7 +72,7 @@ export default function TestingApiItem({ product }) {
       {mutation.isSuccess ? (
         <div>Produit supprimé</div>
       ) : mutationEdit.isSuccess ? (
-        <Flex alignItems="center" justifyContent={'space-between'}>
+        <Flex flexDirection={{base:'column', sm:'row'}} alignItems="center" justifyContent={'space-between'}>
           <HStack w="75%">
             <Avatar
               alt={'product image'}
@@ -109,88 +110,7 @@ export default function TestingApiItem({ product }) {
               )}
             </Box>
           </HStack>
-          <HStack>
-            {displayForm ? (
-              <>
-                <Button
-                  colorScheme={'yellow'}
-                  onClick={() => setDisplayForm(!displayForm)}
-                  w={24}
-                >
-                  Annuler
-                </Button>
-                <Button
-                  colorScheme={'green'}
-                  onClick={() => editProduct(product.id)}
-                  w={24}
-                >
-                  Valider
-                </Button>
-              </>
-            ) : (
-              <>
-                <Button
-                  colorScheme={'blue'}
-                  onClick={() => setDisplayForm(!displayForm)}
-                  w={24}
-                >
-                  Modifier
-                </Button>
-
-                <Button
-                  colorScheme={'red'}
-                  //onClick={() => deleteProduct(product.id)}
-                  onClick={() => {
-                    mutation.mutate(product.id)
-                  }}
-                  w={24}
-                >
-                  Supprimer
-                </Button>
-              </>
-            )}
-          </HStack>
-        </Flex>
-      ) : (
-        <Flex alignItems="center" justifyContent={'space-between'}>
-          <HStack w="75%">
-            <Avatar
-              alt={'product image'}
-              src={`/Images/shop/${product.image[0]}`}
-            />
-            <Box w="100%">
-              {displayForm ? (
-                <FormControl isRequired mb={5}>
-                  <Input
-                    placeholder="Product name"
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </FormControl>
-              ) : (
-                <Heading as={'h3'} textTransform="uppercase" size={'xs'}>
-                  {product.name}
-                </Heading>
-              )}
-
-              {displayForm ? (
-                <FormControl isRequired mb={5}>
-                  <Textarea
-                    placeholder="Product description"
-                    type="text"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                  />
-                </FormControl>
-              ) : (
-                <Text pt="2" fontSize="sm">
-                  {product.description.substring(0, 100)}...
-                </Text>
-              )}
-            </Box>
-          </HStack>
-          <HStack>
+          <Stack direction={{base:'row', sm:'column'}} >
             {displayForm ? (
               <>
                 <Button
@@ -223,7 +143,6 @@ export default function TestingApiItem({ product }) {
 
                 <Button
                   colorScheme={'red'}
-                  //onClick={() => deleteProduct(product.id)}
                   onClick={() => {
                     mutation.mutate(product.id)
                   }}
@@ -233,7 +152,90 @@ export default function TestingApiItem({ product }) {
                 </Button>
               </>
             )}
+          </Stack>
+        </Flex>
+      ) : (
+        <Flex flexDirection={{base:'column', sm:'row'}} alignItems="center" justifyContent={'space-between'}>
+          <HStack w="75%">
+            <Avatar
+              alt={'product image'}
+              src={`/Images/shop/${product.image[0]}`}
+            />
+            <Box w="100%">
+              {displayForm ? (
+                <FormControl isRequired mb={5}>
+                  <Input
+                    placeholder="Product name"
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </FormControl>
+              ) : (
+                <Heading as={'h3'} textTransform="uppercase" size={'xs'}>
+                  {product.name}
+                </Heading>
+              )}
+
+              {displayForm ? (
+                <FormControl isRequired mb={5}>
+                  <Textarea
+                    placeholder="Product description"
+                    type="text"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
+                </FormControl>
+              ) : (
+                <Text pt="2" fontSize="sm">
+                  {product.description.substring(0, 100)}...
+                </Text>
+              )}
+            </Box>
           </HStack>
+          <Stack direction={{base:'row', sm:'column'}} >
+            {displayForm ? (
+              <>
+                <Button
+                  colorScheme={'yellow'}
+                  onClick={() => setDisplayForm(!displayForm)}
+                  w={24}
+                >
+                  Annuler
+                </Button>
+                <Button
+                  colorScheme={'green'}
+                  //onClick={() => editProduct(product.id)}
+                  onClick={() => {
+                    mutationEdit.mutate(product.id)
+                  }}
+                  w={24}
+                >
+                  Valider
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  colorScheme={'blue'}
+                  onClick={() => setDisplayForm(!displayForm)}
+                  w={24}
+                >
+                  Modifier
+                </Button>
+
+                <Button
+                  colorScheme={'red'}
+                  onClick={() => {
+                    mutation.mutate(product.id)
+                  }}
+                  w={24}
+                >
+                  Supprimer
+                </Button>
+              </>
+            )}
+          </Stack>
         </Flex>
       )}
     </>

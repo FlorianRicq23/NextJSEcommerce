@@ -3,6 +3,7 @@ import TestingApiItem from '../../components/testingApiItem'
 import TestingApiCreate from '../../components/testingApiCreate'
 import axios from 'axios'
 import { useMutation, useQuery } from 'react-query'
+import Head from 'next/head'
 
 export default function TestingApi() {
   let title = `NextJS E-Shop - Testing API`
@@ -17,6 +18,11 @@ export default function TestingApi() {
   )
 
   return (
+    <>
+      <Head>
+        <title>{title}</title>
+        <meta name="description" content='Page de test pour de API next' />
+      </Head>
     <Box>
       <Flex
         direction={'column'}
@@ -27,11 +33,11 @@ export default function TestingApi() {
         ml="auto"
       >
         <Box>
-          <Heading as="h2">Création d&apos;un produit</Heading>
+          <Heading as="h2" size={'md'}>Création d&apos;un produit</Heading>
           <TestingApiCreate />
         </Box>
         <Box>
-          <Heading as="h2" mb={7}>
+          <Heading as="h2" mb={7} size={'md'}>
             Liste de produits (non synchronisée avec /produits)
           </Heading>
 
@@ -45,6 +51,7 @@ export default function TestingApi() {
         </Box>
       </Flex>
     </Box>
+    </>
   )
 }
 

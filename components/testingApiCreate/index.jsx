@@ -10,9 +10,13 @@ import {
   Text,
 } from '@chakra-ui/react'
 import { useMutation, useQueryClient } from 'react-query'
+import axios from 'axios'
 
 export default function TestingApiCreate() {
+  const queryClient = useQueryClient()
+
   const submitProduct = async (e) => {
+    console.log('submit')
     e.preventDefault()
     const form = e.target
     const formData = new FormData(form)
@@ -22,7 +26,8 @@ export default function TestingApiCreate() {
     const price = formData.get('price')
     const description = formData.get('description')
     const image = ['new-product.jpeg']
-    const response = await fetch('/api/products', {
+    mutation.mutate({ name, quantity, category, price, description, image })
+    /* const response = await fetch('/api/products', {
       method: 'POST',
       body: JSON.stringify({
         name,
@@ -35,30 +40,22 @@ export default function TestingApiCreate() {
       headers: {
         'Content-Type': 'application/json',
       },
-    })
+    }) */
     form.reset()
   }
 
-  const queryClient = useQueryClient()
-  const mutationAdd = useMutation(submitProduct, {
-    onError: (error, variable, context) => {
-      console.log(error)
+  const mutation = useMutation(
+    (newProduct) => {
+      return axios.post('/api/products', newProduct)
     },
-    onSuccess: (data) => {
-      console.log(data)
-      queryClient.invalidateQueries(['listeProducts'])
-    },
-    onSettled: () => {
-      console.log('tets')
-    },
-  })
+    {
+      onSuccess: () => queryClient.invalidateQueries(['listeProducts']),
+    }
+  )
 
   return (
     <Box p={7} mr="auto" ml="auto">
-      <form onSubmit={mutationAdd}>
-      {mutationAdd.error && (
-        <h5 onClick={() => mutationAdd.reset()}>{mutationAdd.error}</h5>
-      )}
+      <form onSubmit={submitProduct}>
         <FormControl isRequired mb={5}>
           <FormLabel>Nom du produit</FormLabel>
           <Input
