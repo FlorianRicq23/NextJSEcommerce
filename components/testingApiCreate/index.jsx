@@ -7,10 +7,11 @@ import {
   FormLabel,
   Input,
   Select,
+  Text,
 } from '@chakra-ui/react'
+import { useMutation, useQueryClient } from 'react-query'
 
 export default function TestingApiCreate() {
-
   const submitProduct = async (e) => {
     e.preventDefault()
     const form = e.target
@@ -35,11 +36,29 @@ export default function TestingApiCreate() {
         'Content-Type': 'application/json',
       },
     })
-    form.reset();
+    form.reset()
   }
+
+  const queryClient = useQueryClient()
+  const mutationAdd = useMutation(submitProduct, {
+    onError: (error, variable, context) => {
+      console.log(error)
+    },
+    onSuccess: (data) => {
+      console.log(data)
+      queryClient.invalidateQueries(['listeProducts'])
+    },
+    onSettled: () => {
+      console.log('tets')
+    },
+  })
+
   return (
     <Box p={7} mr="auto" ml="auto">
-      <form onSubmit={submitProduct}>
+      <form onSubmit={mutationAdd}>
+      {mutationAdd.error && (
+        <h5 onClick={() => mutationAdd.reset()}>{mutationAdd.error}</h5>
+      )}
         <FormControl isRequired mb={5}>
           <FormLabel>Nom du produit</FormLabel>
           <Input
@@ -70,20 +89,16 @@ export default function TestingApiCreate() {
         <FormControl isRequired mb={5}>
           <FormLabel>Catégorie du produit</FormLabel>
           <Select
-          placeholder="Catégorie du produit"
-          name="category"
-          id="category"
-        >
-          <option value="homme">Homme</option>
-          <option value="femme">Femme</option>
-          <option value="enfant">Enfant</option>
-        </Select>
+            placeholder="Catégorie du produit"
+            name="category"
+            id="category"
+          >
+            <option value="homme">Homme</option>
+            <option value="femme">Femme</option>
+            <option value="enfant">Enfant</option>
+          </Select>
         </FormControl>
-        <Button
-          type="submit"
-          width="full"
-          mt={4}
-        >
+        <Button type="submit" width="full" mt={4}>
           Ajouter le produit
         </Button>
       </form>

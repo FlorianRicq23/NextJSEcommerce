@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { useMutation } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 
 export default function TestingApiItem({ product }) {
   const router = useRouter()
@@ -40,33 +40,37 @@ export default function TestingApiItem({ product }) {
       },
     })
     setDisplayForm(false)
-    //router.replace(router.asPath);
   }
 
   const deleteProduct = async (productId) => {
     const response = await fetch(`/api/products/${productId}`, {
       method: 'DELETE',
     })
-    router.push({
-      pathname: '/testing-api',
-    })
-    //router.replace(router.asPath);
   }
 
   const mutation = useMutation(deleteProduct, {
-    onError: (error, variable, contexte) => {
+    onError: (error, variable, context) => {
       console.log(error)
     },
-    onSuccess: (data, variable, contexte) => {
+    onSuccess:async (data, variable, context) => {
       console.log(data)
     },
+  })
+  const queryClient = useQueryClient();
+  const mutationEdit = useMutation(editProduct, {
+    onError: (error, variable, context) => {
+      console.log(error)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['listeProducts'])
+    }
   })
 
   return (
     <>
       {mutation.isSuccess ? (
         <div>Produit supprimé</div>
-      ) : (
+      ) : mutationEdit.isSuccess ? (
         <Flex alignItems="center" justifyContent={'space-between'}>
           <HStack w="75%">
             <Avatar
@@ -118,6 +122,90 @@ export default function TestingApiItem({ product }) {
                 <Button
                   colorScheme={'green'}
                   onClick={() => editProduct(product.id)}
+                  w={24}
+                >
+                  Valider
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  colorScheme={'blue'}
+                  onClick={() => setDisplayForm(!displayForm)}
+                  w={24}
+                >
+                  Modifier
+                </Button>
+
+                <Button
+                  colorScheme={'red'}
+                  //onClick={() => deleteProduct(product.id)}
+                  onClick={() => {
+                    mutation.mutate(product.id)
+                  }}
+                  w={24}
+                >
+                  Supprimer
+                </Button>
+              </>
+            )}
+          </HStack>
+        </Flex>
+      ) : (
+        <Flex alignItems="center" justifyContent={'space-between'}>
+          <HStack w="75%">
+            <Avatar
+              alt={'product image'}
+              src={`/Images/shop/${product.image[0]}`}
+            />
+            <Box w="100%">
+              {displayForm ? (
+                <FormControl isRequired mb={5}>
+                  <Input
+                    placeholder="Product name"
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </FormControl>
+              ) : (
+                <Heading as={'h3'} textTransform="uppercase" size={'xs'}>
+                  {product.name}
+                </Heading>
+              )}
+
+              {displayForm ? (
+                <FormControl isRequired mb={5}>
+                  <Textarea
+                    placeholder="Product description"
+                    type="text"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
+                </FormControl>
+              ) : (
+                <Text pt="2" fontSize="sm">
+                  {product.description.substring(0, 100)}...
+                </Text>
+              )}
+            </Box>
+          </HStack>
+          <HStack>
+            {displayForm ? (
+              <>
+                <Button
+                  colorScheme={'yellow'}
+                  onClick={() => setDisplayForm(!displayForm)}
+                  w={24}
+                >
+                  Annuler
+                </Button>
+                <Button
+                  colorScheme={'green'}
+                  //onClick={() => editProduct(product.id)}
+                  onClick={() => {
+                    mutationEdit.mutate(product.id)
+                  }}
                   w={24}
                 >
                   Valider

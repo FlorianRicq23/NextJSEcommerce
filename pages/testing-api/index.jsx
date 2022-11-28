@@ -32,7 +32,7 @@ export default function TestingApi() {
         </Box>
         <Box>
           <Heading as="h2" mb={7}>
-            Liste de produits
+            Liste de produits (non synchronisée avec /produits)
           </Heading>
 
           <Stack divider={<StackDivider />} spacing="4">

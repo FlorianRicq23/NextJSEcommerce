@@ -28,50 +28,11 @@ import VarianteItem from '../../components/VarianteItem'
 function ProductDetailPage({ product }) {
   const { myShoppingCart, setMyShoppingCart } = useMyShoppingCart()
   let title = `NextJS E-Shop -  ${product.name}`
-  const router = useRouter()
-
-  const [name, setName] = useState(product.name)
-  const [quantity, setQuantity] = useState(product.quantity)
-  const [category, setCategory] = useState(product.category)
-  const [price, setPrice] = useState(product.price)
-  const [description, setDescription] = useState(product.description)
-  const [image, setImage] = useState(product.image)
   const [imageStack, setImageStack] = useState(product.image)
   const [imageDisplay, setImageDisplay] = useState(imageStack[0])
   const [indexVariante, setIndexVariante] = useState(0)
-  const [displayForm, setDisplayForm] = useState(false)
   const colorPrice = useColorModeValue('gray.900', 'gray.400')
   const colorDescription = useColorModeValue('gray.500', 'gray.400')
-
-  const editProduct = async (productId) => {
-    const response = await fetch(`/api/products/${productId}`, {
-      method: 'PUT',
-      body: JSON.stringify({
-        name,
-        quantity,
-        category,
-        price,
-        description,
-        image,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    setDisplayForm(false)
-    router.push({
-      pathname: `/products/${productId}`,
-    })
-  }
-
-  const deleteProduct = async (productId) => {
-    const response = await fetch(`/api/products/${productId}`, {
-      method: 'DELETE',
-    })
-    router.push({
-      pathname: '/products',
-    })
-  }
 
   const addToCart = () => {
     setMyShoppingCart((myShoppingCart) => {
@@ -79,7 +40,10 @@ function ProductDetailPage({ product }) {
 
       for (let i = 0; i < myShoppingCart.length; i++) {
         if (myShoppingCart[i].variante) {
-          if (myShoppingCart[i].product.id == product.id && myShoppingCart[i].variante.id == indexVariante) {
+          if (
+            myShoppingCart[i].product.id == product.id &&
+            myShoppingCart[i].variante.id == indexVariante
+          ) {
             isAlreadyInCart = true
           }
         } else if (myShoppingCart[i].product.id == product.id) {
@@ -148,39 +112,17 @@ function ProductDetailPage({ product }) {
             </Flex>
             <Stack spacing={{ base: 6, md: 10 }}>
               <Box as={'header'}>
-                {displayForm ? (
-                  <FormControl isRequired mb={5}>
-                    <Input
-                      placeholder="Product name"
-                      type="text"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                    />
-                  </FormControl>
-                ) : (
-                  <Heading
-                    lineHeight={1.1}
-                    fontWeight={600}
-                    fontSize={{ base: '2xl', sm: '4xl', lg: '5xl' }}
-                  >
-                    {product.name}
-                  </Heading>
-                )}
+                <Heading
+                  lineHeight={1.1}
+                  fontWeight={600}
+                  fontSize={{ base: '2xl', sm: '4xl', lg: '5xl' }}
+                >
+                  {product.name}
+                </Heading>
 
-                {displayForm ? (
-                  <FormControl isRequired mb={5}>
-                    <Input
-                      placeholder="Product price"
-                      type="text"
-                      value={price}
-                      onChange={(e) => setPrice(e.target.value)}
-                    />
-                  </FormControl>
-                ) : (
-                  <Text color={colorPrice} fontWeight={300} fontSize={'2xl'}>
-                    {product.price} €
-                  </Text>
-                )}
+                <Text color={colorPrice} fontWeight={300} fontSize={'2xl'}>
+                  {product.price} €
+                </Text>
               </Box>
 
               <Stack
@@ -193,24 +135,13 @@ function ProductDetailPage({ product }) {
                 }
               >
                 <VStack spacing={{ base: 4, sm: 6 }}>
-                  {displayForm ? (
-                    <FormControl isRequired mb={5}>
-                      <Textarea
-                        placeholder="Product description"
-                        type="text"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                      />
-                    </FormControl>
-                  ) : (
-                    <Text
-                      color={colorDescription}
-                      fontSize={'2xl'}
-                      fontWeight={'300'}
-                    >
-                      {product.description}
-                    </Text>
-                  )}
+                  <Text
+                    color={colorDescription}
+                    fontSize={'2xl'}
+                    fontWeight={'300'}
+                  >
+                    {product.description}
+                  </Text>
                 </VStack>
                 <Box>
                   <Text
@@ -224,28 +155,12 @@ function ProductDetailPage({ product }) {
                   </Text>
 
                   <List spacing={2} mb={'4'}>
-                    {displayForm ? (
-                      <FormControl isRequired mb={5}>
-                        <Select
-                          placeholder="Select category"
-                          name="category"
-                          id="category"
-                          onChange={(e) => setCategory(e.target.value)}
-                          defaultValue={category}
-                        >
-                          <option value="homme">Homme</option>
-                          <option value="femme">Femme</option>
-                          <option value="enfant">Enfant</option>
-                        </Select>
-                      </FormControl>
-                    ) : (
-                      <ListItem>
-                        <Text as={'span'} fontWeight={'bold'}>
-                          Category:
-                        </Text>{' '}
-                        {strUcFirst(product.category)}
-                      </ListItem>
-                    )}
+                    <ListItem>
+                      <Text as={'span'} fontWeight={'bold'}>
+                        Category:
+                      </Text>{' '}
+                      {strUcFirst(product.category)}
+                    </ListItem>
                   </List>
 
                   {product.variantes ? (
@@ -270,49 +185,6 @@ function ProductDetailPage({ product }) {
                         )}
                       </Flex>
                     </>
-                  ) : null}
-
-                  {product.id > 9 ? (
-                    <Flex direction={{ base: 'column', sm: 'row' }} gap={2}>
-                      <Button
-                        colorScheme={'red'}
-                        onClick={() => deleteProduct(product.id)}
-                        fontSize={{ base: 12, lg: 14 }}
-                        h={8}
-                      >
-                        Supprimer le produit
-                      </Button>
-
-                      {displayForm ? (
-                        <>
-                          <Button
-                            colorScheme={'yellow'}
-                            onClick={() => setDisplayForm(!displayForm)}
-                            fontSize={{ base: 12, lg: 14 }}
-                            h={8}
-                          >
-                            Annuler
-                          </Button>
-                          <Button
-                            colorScheme={'green'}
-                            onClick={() => editProduct(product.id)}
-                            fontSize={{ base: 12, lg: 14 }}
-                            h={8}
-                          >
-                            Valider
-                          </Button>
-                        </>
-                      ) : (
-                        <Button
-                          colorScheme={'green'}
-                          onClick={() => setDisplayForm(!displayForm)}
-                          fontSize={{ base: 12, lg: 14 }}
-                          h={8}
-                        >
-                          Modifier
-                        </Button>
-                      )}
-                    </Flex>
                   ) : null}
                 </Box>
               </Stack>
@@ -353,9 +225,9 @@ function ProductDetailPage({ product }) {
 
 export async function getStaticProps({ params }) {
   const id = params.id
-  const product = await fetch(`https://nextjs-ecommerce-florianricq23.vercel.app/api/products/${id}`).then(
-    (r) => r.json()
-  )
+  const product = await fetch(
+    `https://nextjs-ecommerce-florianricq23.vercel.app/api/products/${id}`
+  ).then((r) => r.json())
 
   return {
     props: {
@@ -364,9 +236,9 @@ export async function getStaticProps({ params }) {
   }
 }
 export async function getStaticPaths() {
-  const products = await fetch('https://nextjs-ecommerce-florianricq23.vercel.app/api/products').then((r) =>
-    r.json()
-  )
+  const products = await fetch(
+    'https://nextjs-ecommerce-florianricq23.vercel.app/api/products'
+  ).then((r) => r.json())
   return {
     paths: products.products.map((product) => ({
       params: { id: product.id.toString() },
