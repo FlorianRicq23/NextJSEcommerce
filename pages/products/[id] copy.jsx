@@ -35,17 +35,13 @@ function ProductDetailPage({ product }) {
   const colorPrice = useColorModeValue('gray.900', 'gray.400')
   const colorDescription = useColorModeValue('gray.500', 'gray.400')
 
+
   const [selectedVariant, setSelectedVariant] = useState(null)
+  console.log(selectedVariant)
   const handleVariantChange = (event) => {
     const selectedSize = event.target.value
     setSelectedVariant(
       product.variantes.find((variant) => variant.colors === selectedSize)
-    )
-  }
-
-  const handleVariantChange2 = (item) => {
-    setSelectedVariant(
-      product.variantes.find((variant) => variant.colors === item)
     )
   }
 
@@ -94,7 +90,7 @@ function ProductDetailPage({ product }) {
         <meta name="description" content={product.description} />
       </Head>
       <Box>
-        {/* <Box p={5}>
+        <Box p={5}>
           <Image
             h={80}
             w={80}
@@ -114,7 +110,7 @@ function ProductDetailPage({ product }) {
           {selectedVariant && (
             <Button mt={4}>Ajouter au panier ({selectedVariant.colors})</Button>
           )}
-        </Box> */}
+        </Box>
         <Container maxW={'7xl'}>
           <SimpleGrid
             columns={{ base: 1, lg: 2 }}
@@ -125,43 +121,25 @@ function ProductDetailPage({ product }) {
               <Image
                 rounded={'md'}
                 alt={'product image'}
-                src={
-                  selectedVariant
-                    ? `/Images/shop/${selectedVariant.image[0]}`
-                    : `/Images/shop/${product.image[0]}`
-                }
+                src={`/Images/shop/${imageDisplay}`}
                 fit={'cover'}
                 align={'center'}
                 w={'100%'}
                 h={{ base: '100%', sm: '400px', lg: '500px' }}
               />
-
               <SimpleGrid columns={3} spacing={{ base: 2, sm: 5 }} mt={3}>
-                {selectedVariant
-                  ? selectedVariant.image.map((item, index) => (
-                      <Image
-                        key={index}
-                        rounded={'md'}
-                        alt={'product image'}
-                        src={`/Images/shop/${item}`}
-                        fit={'cover'}
-                        align={'center'}
-                        w={'100%'}
-                        onClick={() => setImageDisplay(item)}
-                      />
-                    ))
-                  : product.image.map((item, index) => (
-                      <Image
-                        key={index}
-                        rounded={'md'}
-                        alt={'product image'}
-                        src={`/Images/shop/${item}`}
-                        fit={'cover'}
-                        align={'center'}
-                        w={'100%'}
-                        onClick={() => setImageDisplay(item)}
-                      />
-                    ))}
+                {imageStack.map((item, index) => (
+                  <Image
+                    key={index}
+                    rounded={'md'}
+                    alt={'product image'}
+                    src={`/Images/shop/${item}`}
+                    fit={'cover'}
+                    align={'center'}
+                    w={'100%'}
+                    onClick={() => setImageDisplay(item)}
+                  />
+                ))}
               </SimpleGrid>
             </Flex>
             <Stack spacing={{ base: 6, md: 10 }}>
@@ -216,30 +194,6 @@ function ProductDetailPage({ product }) {
                       {strUcFirst(product.category)}
                     </ListItem>
                   </List>
-
-                  {product.variantes ? (
-                    <>
-                      <Flex gap={{ base: 2, sm: 5 }} mt={3}>
-                        {product.variantes.map((item, index) => (
-                          <Image
-                            key={index}
-                            rounded={'md'}
-                            alt={'product image'}
-                            src={`/Images/shop/${item.image[0]}`}
-                            fit={'cover'}
-                            align={'center'}
-                            w={'60px'}
-                            h={'60px'}
-                            _hover={{
-                              border: 'black solid 1px',
-                              cursor: 'pointer',
-                            }}
-                            onClick={() => handleVariantChange2(item.colors)}
-                          />
-                        ))}
-                      </Flex>
-                    </>
-                  ) : null}
 
                   {product.variantes ? (
                     <>
