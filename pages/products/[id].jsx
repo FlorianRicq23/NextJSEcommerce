@@ -24,29 +24,23 @@ import {
 import { MdLocalShipping } from 'react-icons/md'
 import { useMyShoppingCart } from '../../utils/hooks'
 import { useState } from 'react'
-import VarianteItem from '../../components/VarianteItem'
 
 function ProductDetailPage({ product }) {
   const { myShoppingCart, setMyShoppingCart } = useMyShoppingCart()
   let title = `NextJS E-Shop -  ${product.name}`
-  const [imageStack, setImageStack] = useState(product.image)
-  const [imageDisplay, setImageDisplay] = useState(imageStack[0])
-  const [indexVariante, setIndexVariante] = useState(0)
   const colorPrice = useColorModeValue('gray.900', 'gray.400')
   const colorDescription = useColorModeValue('gray.500', 'gray.400')
 
-  const [selectedVariant, setSelectedVariant] = useState(null)
-  const handleVariantChange = (event) => {
-    const selectedSize = event.target.value
-    setSelectedVariant(
-      product.variantes.find((variant) => variant.colors === selectedSize)
-    )
-  }
+  const [imageDisplay, setImageDisplay] = useState(product.image[0])
+  const [selectedVariant, setSelectedVariant] = useState(product.variantes ? product.variantes[0] : null)
+  const [imageStack, setImageStack] = useState(product.variantes ? selectedVariant.image : product.image)
+
 
   const handleVariantChange2 = (item) => {
-    setSelectedVariant(
-      product.variantes.find((variant) => variant.colors === item)
-    )
+    //setSelectedVariant(product.variantes.find((variant) => variant.colors === item))
+    setSelectedVariant(item)
+    setImageDisplay(item.image[0])
+    setImageStack(item.image)
   }
 
   const addToCart = () => {
@@ -57,7 +51,7 @@ function ProductDetailPage({ product }) {
         if (myShoppingCart[i].variante) {
           if (
             myShoppingCart[i].product.id == product.id &&
-            myShoppingCart[i].variante.id == indexVariante
+            myShoppingCart[i].variante.id == selectedVariant.id
           ) {
             isAlreadyInCart = true
           }
@@ -69,7 +63,7 @@ function ProductDetailPage({ product }) {
       if (isAlreadyInCart) return myShoppingCart
       else {
         const varianteProduct = product.variantes
-          ? product.variantes[indexVariante]
+          ? product.variantes[selectedVariant.id]
           : null
         return [
           {
@@ -94,27 +88,6 @@ function ProductDetailPage({ product }) {
         <meta name="description" content={product.description} />
       </Head>
       <Box>
-        {/* <Box p={5}>
-          <Image
-            h={80}
-            w={80}
-            src={selectedVariant ? `/Images/shop/${selectedVariant.image[0]}` : `/Images/shop/${product.image[0]}`}
-          />
-          <Text mt={2} fontWeight="bold">
-            {product.name}
-          </Text>
-          <Text mt={2}>{product.description}</Text>
-          <Select mt={4} onChange={handleVariantChange}>
-            {product.variantes.map((variant, index) => (
-              <option key={index} value={variant.colors}>
-                {variant.colors}
-              </option>
-            ))}
-          </Select>
-          {selectedVariant && (
-            <Button mt={4}>Ajouter au panier ({selectedVariant.colors})</Button>
-          )}
-        </Box> */}
         <Container maxW={'7xl'}>
           <SimpleGrid
             columns={{ base: 1, lg: 2 }}
@@ -125,11 +98,7 @@ function ProductDetailPage({ product }) {
               <Image
                 rounded={'md'}
                 alt={'product image'}
-                src={
-                  selectedVariant
-                    ? `/Images/shop/${selectedVariant.image[0]}`
-                    : `/Images/shop/${product.image[0]}`
-                }
+                src={`/Images/shop/${imageDisplay}`}
                 fit={'cover'}
                 align={'center'}
                 w={'100%'}
@@ -137,31 +106,18 @@ function ProductDetailPage({ product }) {
               />
 
               <SimpleGrid columns={3} spacing={{ base: 2, sm: 5 }} mt={3}>
-                {selectedVariant
-                  ? selectedVariant.image.map((item, index) => (
-                      <Image
-                        key={index}
-                        rounded={'md'}
-                        alt={'product image'}
-                        src={`/Images/shop/${item}`}
-                        fit={'cover'}
-                        align={'center'}
-                        w={'100%'}
-                        onClick={() => setImageDisplay(item)}
-                      />
-                    ))
-                  : product.image.map((item, index) => (
-                      <Image
-                        key={index}
-                        rounded={'md'}
-                        alt={'product image'}
-                        src={`/Images/shop/${item}`}
-                        fit={'cover'}
-                        align={'center'}
-                        w={'100%'}
-                        onClick={() => setImageDisplay(item)}
-                      />
-                    ))}
+                {imageStack.map((item, index) => (
+                  <Image
+                    key={index}
+                    rounded={'md'}
+                    alt={'product image'}
+                    src={`/Images/shop/${item}`}
+                    fit={'cover'}
+                    align={'center'}
+                    w={'100%'}
+                    onClick={() => setImageDisplay(item)}
+                  />
+                ))}
               </SimpleGrid>
             </Flex>
             <Stack spacing={{ base: 6, md: 10 }}>
@@ -234,29 +190,12 @@ function ProductDetailPage({ product }) {
                               border: 'black solid 1px',
                               cursor: 'pointer',
                             }}
-                            onClick={() => handleVariantChange2(item.colors)}
+                            onClick={() => handleVariantChange2(item)}
                           />
                         ))}
                       </Flex>
-                    </>
-                  ) : null}
-
-                  {product.variantes ? (
-                    <>
                       <Flex gap={{ base: 2, sm: 5 }} mt={3}>
-                        {product.variantes.map((item, index) => (
-                          <VarianteItem
-                            key={index}
-                            item={item}
-                            setImageStack={setImageStack}
-                            setImageDisplay={setImageDisplay}
-                            setIndexVariante={setIndexVariante}
-                          />
-                        ))}
-                      </Flex>
-
-                      <Flex gap={{ base: 2, sm: 5 }} mt={3}>
-                        {product?.variantes[indexVariante]?.sizes?.map(
+                        {product?.variantes[selectedVariant.id]?.sizes?.map(
                           (item, index) => (
                             <Box key={index}>{item}</Box>
                           )
